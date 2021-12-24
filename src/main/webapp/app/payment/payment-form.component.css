@@ -1,0 +1,17 @@
+.top {
+  position: relative;
+}
+
+.middle {
+  position: relative;
+  max-width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 50px;
+}
+
+.title {
+  padding: 10px;
+  background-color: aqua;
+  text-align: center;
+}

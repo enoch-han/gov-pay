@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.5.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    
+    <changeSet id="20211219000000-1" author="system">
+        <createTable tableName="payment">
+            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+            <column name="cik" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="ccc" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="company_name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="last_payment" type="timestamp"></column>
+            <column name="payment_amount" type="bigint">
+                <constraints nullable="false" />
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="email" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone_number" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+        </createTable>
+
+        <addForeignKeyConstraint 
+        	baseColumnNames="user_id"
+            baseTableName="payment"
+            constraintName="fk_payment_user_id"
+            referencedColumnNames="id"
+            referencedTableName="jhi_user"/>
+            
+        <ext:loadData encoding="UTF-8"
+                  file="config/liquibase/data/payments.csv"
+                  separator=";"
+                  identityInsertEnabled="true"
+                  tableName="payment">
+                <column name="last_payment" type="timestamp"/>
+        </ext:loadData>
+            
+    </changeSet>
+</databaseChangeLog>

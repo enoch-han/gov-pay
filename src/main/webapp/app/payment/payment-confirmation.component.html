@@ -1,0 +1,52 @@
+<div>
+  <div class="top">
+    <div>
+      <h4>Exchange Comission</h4>
+    </div>
+    <div style="float: right; width: 40%">
+      <fa-icon icon="home"></fa-icon>
+    </div>
+  </div>
+  <div class="middle">
+    <div class="info">
+      <h2>
+        <b style="color: #00134d"> Submit payment </b>
+      </h2>
+      <p>
+        To submit an SEC filling fee payment using ACH, credit or debit card, enter the below information and click next you will then
+        verify your CIK and contact information before selecting a payment type and entering your payment information.
+      </p>
+      <p>
+        Please note: ACH payments take 1-3 buisness days before being reflected in EDGAR. credit and debit card transation will appear in
+        EDGAR in [TBD] hours.
+      </p>
+    </div>
+    <div style="background-color: #e6e6e6; padding-bottom: 50px">
+      <div class="title">
+        <h3>
+          <p>
+            <b> Process Payment </b>
+          </p>
+        </h3>
+      </div>
+      <div class="middlecard">
+        <p style="font-weight: bold">Processing Payment</p>
+        <hr />
+        <P> The Credit/Debit card payment has been processed.</P>
+        <p>The collection will be visible in EDGAR in the next 15 minutes</p>
+        <br />
+        <p>Transaction ID: {{ id }}</p>
+        <p>Transation Amount: {{ amount | currency: 'USD' }}</p>
+        <br />
+        <p>An email confirmation will be sent to you shortly</p>
+        <button
+          type="submit"
+          class="btn btn-outline-primary"
+          style="background-color: aqua; color: #003366; margin: 10px; margin-left: 420px"
+        >
+          <span class="fa fa-ban"></span>&nbsp;<span><b>close</b></span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

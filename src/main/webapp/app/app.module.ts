@@ -1,3 +1,4 @@
+import { PaymentModule } from './payment/payment.module';
 import { NgModule, LOCALE_ID } from '@angular/core';
 import { registerLocaleData } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
@@ -30,6 +31,7 @@ import { ErrorComponent } from './layouts/error/error.component';
     BrowserModule,
     SharedModule,
     HomeModule,
+    PaymentModule,
     // jhipster-needle-angular-add-module JHipster will add new module here
     EntityRoutingModule,
     AppRoutingModule,

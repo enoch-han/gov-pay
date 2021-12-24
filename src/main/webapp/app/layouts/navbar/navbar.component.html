@@ -26,6 +26,30 @@
           </span>
         </a>
       </li>
+      <li
+        *jhiHasAnyAuthority="'ROLE_USER'"
+        ngbDropdown
+        class="nav-item dropdown pointer"
+        routerLinkActive="active"
+        display="dynamic"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        <a class="nav-link dropdown-toggle" ngbDropdownToggle href="javascript:void(0);" id="payment-menu">
+          <span>
+            <fa-icon icon="money-bill"></fa-icon>
+            <span>Payment</span>
+            <b class="caret"></b>
+          </span>
+        </a>
+        <ul class="dropdown-menu" ngbDropdownMenu>
+          <li>
+            <a class="dropdown-item" routerLink="payment/payment-form" routerLinkActive="active" (click)="collapseNavbar()">
+              <fa-icon icon="money-bill"></fa-icon>
+              <span>pay</span>
+            </a>
+          </li>
+        </ul>
+      </li>
       <!-- jhipster-needle-add-element-to-menu - JHipster will add new menu items here -->
       <li
         *ngSwitchCase="true"
