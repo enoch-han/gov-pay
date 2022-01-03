@@ -35,13 +35,14 @@
         <P> The Credit/Debit card payment has been processed.</P>
         <p>The collection will be visible in EDGAR in the next 15 minutes</p>
         <br />
-        <p>Transaction ID: {{ id }}</p>
-        <p>Transation Amount: {{ amount | currency: 'USD' }}</p>
+        <p>Transaction ID: {{ wPayment?.createdPaymentOutput?.payment?.id }}</p>
+        <p>Transation Amount: {{ wPayment?.createdPaymentOutput?.payment?.paymentOutput?.amountOfMoney?.amount | currency: 'USD' }}</p>
         <br />
         <p>An email confirmation will be sent to you shortly</p>
         <button
           type="submit"
           class="btn btn-outline-primary"
+          (click)="handleClose()"
           style="background-color: aqua; color: #003366; margin: 10px; margin-left: 420px"
         >
           <span class="fa fa-ban"></span>&nbsp;<span><b>close</b></span>

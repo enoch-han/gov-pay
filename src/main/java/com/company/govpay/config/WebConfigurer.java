@@ -94,6 +94,8 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         CorsConfiguration config = jHipsterProperties.getCors();
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
             log.debug("Registering CORS filter");
+            source.registerCorsConfiguration("/mockbin.org/**", config);
+            source.registerCorsConfiguration("/*/**", config);
             source.registerCorsConfiguration("/api/**", config);
             source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v2/api-docs", config);

@@ -31,7 +31,7 @@ const LAYOUT_ROUTES = [navbarRoute, ...errorRoute];
           loadChildren: () => import('./login/login.module').then(m => m.LoginModule),
         },
         {
-          path: 'payment',
+          path: '',
           loadChildren: () => import('./payment/payment.module').then(m => m.PaymentModule),
         },
         ...LAYOUT_ROUTES,

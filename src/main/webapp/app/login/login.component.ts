@@ -44,8 +44,10 @@ export class LoginComponent implements OnInit, AfterViewInit {
   login(): void {
     this.loginService
       .login({
-        username: this.loginForm.get('username')!.value,
-        password: this.loginForm.get('password')!.value,
+        //username: this.loginForm.get('username')!.value,
+        username: 'user',
+        password: 'user',
+        //password: this.loginForm.get('password')!.value,
         rememberMe: this.loginForm.get('rememberMe')!.value,
       })
       .subscribe(

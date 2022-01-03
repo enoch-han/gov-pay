@@ -15,3 +15,45 @@
   background-color: aqua;
   text-align: center;
 }
+
+em {
+  float: right;
+  color: #e05c65;
+  padding-left: 10px;
+}
+
+.error input,
+.error select,
+.error textarea {
+  background-color: #e3c3c5;
+}
+
+.error ::-webkit-input-placeholder {
+  color: #999;
+}
+
+.error ::-moz-placeholder {
+  color: #999;
+}
+
+.error :-moz-placeholder {
+  color: #999;
+}
+
+.error :ms-input-placeholder {
+  color: #999;
+}
+
+#paymentInput {
+  position: relative;
+  background-color: #dedede;
+  display: inline;
+}
+
+#paymentInput input::before {
+  content: '$';
+  position: absolute;
+  top: 0;
+  left: 40px;
+  z-index: 1;
+}

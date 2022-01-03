@@ -30,46 +30,137 @@
         </h3>
       </div>
       <div style="padding: 20px">
-        <form name="paymentForm" role="form" novalidate (ngSubmit)="onNext()" #paymentForm="ngForm">
+        <form name="paymentForm" [formGroup]="paymentFormGroup" role="form" novalidate (ngSubmit)="onNext()" #paymentForm="ngForm">
           <h4>
             <b>Your credential and payment amount</b>
           </h4>
           <div class="form-group">
             <label class="form-control-label" for="field_cik">CIK</label>
-            <input type="text" class="form-control" style="width: 40%" name="cik" id="field_cik" [(ngModel)]="cik" required />
+            <em *ngIf="cikFormControl.invalid && cikFormControl.dirty && cikFormControl.errors?.['required']">Required</em>
+            <em *ngIf="cikFormControl.invalid && cikFormControl.dirty && cikFormControl.errors?.['minlength']"
+              >The minimum length should be 7</em
+            >
+            <em *ngIf="cikFormControl.invalid && cikFormControl.dirty && cikFormControl.errors?.['maxlength']"
+              >The maximum length should be 10</em
+            >
+            <em *ngIf="cikFormControl.invalid && cikFormControl.dirty && cikFormControl.errors?.['pattern']">Cik should only be numbers</em>
+            <input
+              type="text"
+              formControlName="cikFormControl"
+              (focusout)="formatCik()"
+              class="form-control"
+              style="width: 40%"
+              name="cik"
+              id="field_cik"
+              [(ngModel)]="cik"
+              required
+            />
           </div>
           <div class="form-group">
             <label class="form-control-label" for="field_ccc">CCC</label>
-            <input type="text" class="form-control" style="width: 40%" name="ccc" id="field_ccc" [(ngModel)]="ccc" required />
+            <em *ngIf="cccFormControl.invalid && cccFormControl.dirty && cccFormControl.errors?.['required']">Required</em>
+            <em *ngIf="cccFormControl.invalid && cccFormControl.dirty && cccFormControl.errors?.['pattern']"
+              >CCC should only be alphanumberic characters</em
+            >
+            <input
+              type="text"
+              formControlName="cccFormControl"
+              class="form-control"
+              style="width: 40%"
+              name="ccc"
+              id="field_ccc"
+              [(ngModel)]="ccc"
+              required
+            />
           </div>
           <div class="form-group">
             <label class="form-control-label" for="field_payment_amount">Payment Amount</label>
-            <input
-              type="number"
-              class="form-control"
-              style="width: 40%"
-              name="payment_amount"
-              id="field_payment_amount"
-              [(ngModel)]="paymentAmount"
-              required
-            />
+            <em *ngIf="paymentAmountFormControl.invalid && paymentAmountFormControl.dirty && paymentAmountFormControl.errors?.['required']"
+              >Required</em
+            >
+            <em *ngIf="paymentAmountFormControl.invalid && paymentAmountFormControl.dirty && paymentAmountFormControl.errors?.['min']"
+              >Payment amount should be more than 5 dollars</em
+            >
+            <div id="paymentInput">
+              <input
+                type="number"
+                class="form-control"
+                formControlName="paymentAmountFormControl"
+                (focusout)="formatPaymentAmount()"
+                style="width: 40%"
+                name="payment_amount"
+                id="field_payment_amount"
+                [(ngModel)]="paymentAmount"
+                required
+              />
+            </div>
           </div>
           <h4>
             <b>Your contact information</b>
           </h4>
           <div class="form-group">
             <label class="form-control-label" for="field_name">Name</label>
-            <input type="text" class="form-control" style="width: 40%" name="name" id="field_name" [(ngModel)]="name" required />
+            <em *ngIf="nameFormControl.invalid && nameFormControl.dirty && nameFormControl.errors?.['required']">Required</em>
+            <em *ngIf="nameFormControl.invalid && nameFormControl.dirty && nameFormControl.errors?.['pattern']"
+              >Name should be alphanumeric</em
+            >
+            <input
+              type="text"
+              formControlName="nameFormControl"
+              class="form-control"
+              style="width: 40%"
+              name="name"
+              id="field_name"
+              [(ngModel)]="name"
+              required
+            />
           </div>
           <div class="form-group">
             <label class="form-control-label" for="field_email">Email</label>
-            <input type="text" class="form-control" style="width: 40%" name="email" id="field_email" [(ngModel)]="email" required />
+            <em *ngIf="emailFormControl.invalid && emailFormControl.dirty && emailFormControl.errors?.['required']">Required</em>
+            <em *ngIf="emailFormControl.invalid && emailFormControl.dirty && emailFormControl.errors?.['email']"
+              >Email should have proper email format</em
+            >
+            <input
+              type="text"
+              formControlName="emailFormControl"
+              class="form-control"
+              style="width: 40%"
+              name="email"
+              id="field_email"
+              [(ngModel)]="email"
+              required
+            />
           </div>
           <div class="form-group">
             <label class="form-control-label" for="field_phone">Phone</label>
-            <input type="text" class="form-control" style="width: 40%" name="phone" id="field_phone" [(ngModel)]="phone" required />
+            <em *ngIf="phoneFormControl.invalid && phoneFormControl.dirty && phoneFormControl.errors?.['required']">Required</em>
+            <em *ngIf="phoneFormControl.invalid && phoneFormControl.dirty && phoneFormControl.errors?.['minlength']"
+              >Phone should have minimum 10 digits</em
+            >
+            <em *ngIf="phoneFormControl.invalid && phoneFormControl.dirty && phoneFormControl.errors?.['maxlength']"
+              >Phone should have maximum 10 digits</em
+            >
+            <em *ngIf="phoneFormControl.invalid && phoneFormControl.dirty && phoneFormControl.errors?.['pattern']"
+              >Phone should only contain numbers</em
+            >
+            <input
+              type="text"
+              formControlName="phoneFormControl"
+              class="form-control"
+              style="width: 40%"
+              name="phone"
+              id="field_phone"
+              [(ngModel)]="phone"
+              required
+            />
           </div>
-          <button type="button" class="btn btn-default" style="background-color: #4d4d4d; color: white; margin: 10px; margin-right: 40px">
+          <button
+            type="button"
+            class="btn btn-default"
+            (click)="handleClear()"
+            style="background-color: #4d4d4d; color: white; margin: 10px; margin-right: 40px"
+          >
             <span class="fa fa-ban"></span>&nbsp;<span><b>Clear</b></span>
           </button>
           <button

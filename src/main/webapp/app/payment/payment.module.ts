@@ -13,10 +13,11 @@ import { RouterModule } from '@angular/router';
 const ROUTES = [...paymentFormRoute, ...paymentReviewRoute, ...paymentConfirmationRoute];
 
 @NgModule({
-  imports: [RouterModule.forChild(ROUTES), FormsModule, CommonModule, ReactiveFormsModule, HttpClientModule],
+  imports: [RouterModule.forRoot(ROUTES), FormsModule, CommonModule, ReactiveFormsModule, HttpClientModule],
   declarations: [PaymentFormComponent, PaymentReviewComponent, PaymentConfirmationComponent],
   entryComponents: [PaymentFormComponent, PaymentReviewComponent, PaymentConfirmationComponent],
   providers: [PaymentService, PaymentResolver],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  exports: [PaymentFormComponent, PaymentReviewComponent, PaymentConfirmationComponent],
 })
 export class PaymentModule {}

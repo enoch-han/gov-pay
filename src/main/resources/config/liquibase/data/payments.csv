@@ -1,2 +1,2 @@
-id;user_id;cik;ccc;company_name;payment_amount;name;email;phone_number
-1;1;123;333;some-company;200;henock;henockta@gmail.com;888-555-1212
+id;cik;ccc;company_name;payment_amount;name;email;phone_number
+1;123;333;some-company;200;henock;henockta@gmail.com;888-555-1212

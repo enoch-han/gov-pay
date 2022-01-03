@@ -24,10 +24,5 @@ public class PaymentService {
         log.debug("Request to save payment : {}", payment);
         return paymentRepository.save(payment);
     }
-
-    @Transactional(readOnly = true)
-    public List<Payment> findAllByUser(Long userId) {
-        log.debug("Request to get all payments");
-        return paymentRepository.findByUserId(userId);
-    }
+    //
 }

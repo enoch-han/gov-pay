@@ -1,9 +1,6 @@
-import { User } from 'app/entities/user/user.model';
-import { UserService } from './../entities/user/user.service';
-
 export class Payment {
   public id?: string;
-  public user?: User;
+  public paymentId?: string;
   public lastPayment?: number;
   public companyName?: string;
 
@@ -14,8 +11,5 @@ export class Payment {
     public name?: string,
     public email?: string,
     public phoneNumber?: string
-  ) {
-    this.companyName = 'ABCcompany';
-    this.lastPayment = Date.now();
-  }
+  ) {}
 }

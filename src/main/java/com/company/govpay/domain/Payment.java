@@ -23,8 +23,8 @@ public class Payment implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @Column(name = "payment_Id")
+    private String paymentId;
 
     @NotNull
     @Column(name = "cik", nullable = false)
@@ -43,7 +43,7 @@ public class Payment implements Serializable {
 
     @NotNull
     @Column(name = "payment_amount", nullable = false)
-    private String paymentAmount;
+    private Long paymentAmount;
 
     @NotNull
     @Column(name = "name", nullable = false)
@@ -65,12 +65,12 @@ public class Payment implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public String getPaymentId() {
+        return paymentId;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setPaymentId(String paymentId) {
+        this.paymentId = paymentId;
     }
 
     public String getCik() {
@@ -105,11 +105,11 @@ public class Payment implements Serializable {
         this.lastPayment = lastPayment;
     }
 
-    public String getPaymentAmount() {
+    public Long getPaymentAmount() {
         return paymentAmount;
     }
 
-    public void setPaymentAmount(String paymentAmount) {
+    public void setPaymentAmount(Long paymentAmount) {
         this.paymentAmount = paymentAmount;
     }
 
@@ -150,7 +150,6 @@ public class Payment implements Serializable {
         result = prime * result + ((name == null) ? 0 : name.hashCode());
         result = prime * result + ((paymentAmount == null) ? 0 : paymentAmount.hashCode());
         result = prime * result + ((phoneNumber == null) ? 0 : phoneNumber.hashCode());
-        result = prime * result + ((userId == null) ? 0 : userId.hashCode());
         return result;
     }
 
@@ -187,9 +186,6 @@ public class Payment implements Serializable {
         if (phoneNumber == null) {
             if (other.phoneNumber != null) return false;
         } else if (!phoneNumber.equals(other.phoneNumber)) return false;
-        if (userId == null) {
-            if (other.userId != null) return false;
-        } else if (!userId.equals(other.userId)) return false;
         return true;
     }
 
@@ -214,8 +210,6 @@ public class Payment implements Serializable {
             paymentAmount +
             ", phoneNumber=" +
             phoneNumber +
-            ", userId=" +
-            userId +
             "]"
         );
     }

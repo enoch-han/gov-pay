@@ -1,14 +1,13 @@
 import { PaymentFormComponent } from './payment-form.component';
 import { Authority } from '../config/authority.constants';
 import { Routes } from '@angular/router';
-import { UserRouteAccessService } from '../core/auth/user-route-access.service';
 import { PaymentConfirmationComponent } from './payment-confirmation';
 import { PaymentReviewComponent } from './payment-review.component';
-import { PaymentResolver } from './payment-resolver.service';
+import { UserRouteAccessService } from 'app/core/auth/user-route-access.service';
 
 export const paymentFormRoute: Routes = [
   {
-    path: 'payment-form',
+    path: '',
     component: PaymentFormComponent,
     data: {
       authorities: [Authority.USER],
@@ -20,13 +19,12 @@ export const paymentFormRoute: Routes = [
 
 export const paymentConfirmationRoute: Routes = [
   {
-    path: 'payment-confirmation/:id',
+    path: 'payment-confirmation',
     component: PaymentConfirmationComponent,
     data: {
       authorities: [Authority.USER],
       pageTitle: 'payment',
     },
-    resolve: { id: PaymentResolver },
     canActivate: [UserRouteAccessService],
   },
 ];
