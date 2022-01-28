@@ -1,0 +1,12 @@
+<div>
+  <div>
+    <h2>sorry! the current time is not the working hour</h2>
+
+    <h5>Current time is : {{ workingTime.getCurrentTime() | date: 'shortTime' }}</h5>
+
+    <h5>
+      the working hours are from {{ workingTime.startTime | date: 'shortTime' }} to {{ workingTime.endTime | date: 'shortTime' }}. so please
+      return on the provided time
+    </h5>
+  </div>
+</div>

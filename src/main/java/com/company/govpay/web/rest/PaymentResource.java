@@ -3,6 +3,7 @@ package com.company.govpay.web.rest;
 import com.company.govpay.domain.Mock;
 import com.company.govpay.domain.Payment;
 import com.company.govpay.service.PaymentService;
+import com.company.govpay.service.PaypalService;
 import com.company.govpay.service.UserService;
 import com.company.govpay.service.WorldLinePaymentService;
 import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.CreateHostedCheckoutResponse;
@@ -39,13 +40,21 @@ public class PaymentResource {
 
     private final WorldLinePaymentService worldLinePaymentService;
 
+    private final PaypalService paypalService;
+
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    public PaymentResource(PaymentService paymentService, UserService userService, WorldLinePaymentService worldLinePaymentService) {
+    public PaymentResource(
+        PaymentService paymentService,
+        UserService userService,
+        WorldLinePaymentService worldLinePaymentService,
+        PaypalService paypalService
+    ) {
         this.paymentService = paymentService;
         this.userService = userService;
         this.worldLinePaymentService = worldLinePaymentService;
+        this.paypalService = paypalService;
     }
 
     // @GetMapping("/payments")
@@ -80,7 +89,7 @@ public class PaymentResource {
     @GetMapping("/payments/companyName")
     public Mock getCompanyName() {
         // a mock that aquires company name
-        String uri = "https://mockbin.org/bin/dafff90d-eb30-45c2-9d30-13b819b81eb1";
+        String uri = "https://mockbin.org/bin/c725e6ca-adbe-4a1a-900a-63fea1c4b760";
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, Mock.class);
     }
@@ -88,32 +97,34 @@ public class PaymentResource {
     @GetMapping("/payments/lastPayment")
     public Mock getLastPayment() {
         // a mock that aquires last Payment date
-        String uri = "https://mockbin.org/bin/eab901ae-0524-4716-998c-da6d5602f755";
+        String uri = "https://mockbin.org/bin/5c7b0680-ce8a-41b2-b303-2f9bd9172196";
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, Mock.class);
     }
 
     @PostMapping("/payments/initiate")
-    public CreateHostedCheckoutResponse getInititatePayment(@Valid @RequestBody Payment payment) throws URISyntaxException {
-        log.debug("REST request to initiate WorldLine payment : {}", payment);
-
-        CreateHostedCheckoutResponse response = worldLinePaymentService.initiatePayment(payment);
-        worldLinePaymentService.checkoutId = response.getHostedCheckoutId();
-        worldLinePaymentService.mac = response.getRETURNMAC();
-        worldLinePaymentService.merchantReference = response.getMerchantReference();
-        worldLinePaymentService.partialUrl = response.getPartialRedirectUrl();
-        log.debug(" world line initiation response : {}", response);
-
-        return response;
+    public Mock getInititatePayment(@Valid @RequestBody Payment payment) throws URISyntaxException {
+        String token = "";
+        try {
+            token = paypalService.initiatePayment(payment.getPaymentAmount().toString());
+        } catch (Exception e) {
+            log.debug("error in paypal payment inititiation : {}", e);
+        }
+        log.debug("requested paypal token: {}", token);
+        return new Mock(token);
     }
 
     @PostMapping("/payments/getPaymentResponse")
-    public GetHostedCheckoutResponse getPaymentResponse(@Valid @RequestBody String hostedCheckoutId) throws URISyntaxException {
-        log.debug("REST request to get payment detail : {}", hostedCheckoutId);
+    public Mock getPaymentResponse(@Valid @RequestBody String token) throws URISyntaxException {
+        log.debug("SOAP request to get payment detail : {}", token);
+        String copy = "";
+        try {
+            copy = paypalService.getTransactionId(token);
+        } catch (Exception e) {
+            log.debug(" paypal service getTransactionId excepiton {}", e);
+        }
+        log.debug(" paypal transaction id : {}", copy);
 
-        GetHostedCheckoutResponse response = worldLinePaymentService.getPaymentResponse(hostedCheckoutId);
-        log.debug(" world line alues : {}", response);
-
-        return response;
+        return new Mock(copy);
     }
 }

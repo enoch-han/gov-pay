@@ -1,8 +1,14 @@
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { PaymentService } from './payment.service';
 import { Payment } from './payment.model';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbdModalContent } from './payment-review.component';
+import { Idle } from 'idlejs/dist';
+import { WorkingTime } from 'app/core/util/working-time.service';
+import { interval } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'jhi-payment-form',
@@ -53,7 +59,7 @@ export class PaymentFormComponent implements OnInit {
   }
 
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  constructor(private router: Router, public paymentService: PaymentService) {
+  constructor(private router: Router, public paymentService: PaymentService, private modalService: NgbModal) {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.paymentService.currentpayment !== undefined) {
       this.cik = this.paymentService.currentpayment.cik;
@@ -98,5 +104,11 @@ export class PaymentFormComponent implements OnInit {
     if (this.paymentAmount != null) {
       this.paymentAmount = +this.paymentAmount.toFixed(2);
     }
+  }
+
+  openModal(): void {
+    const modalRef = this.modalService.open(NgbdModalContent);
+    const url = 'http://www.google.com';
+    modalRef.componentInstance.url = url;
   }
 }

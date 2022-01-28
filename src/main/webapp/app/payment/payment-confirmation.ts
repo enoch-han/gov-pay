@@ -7,6 +7,7 @@ import { ProfileService } from 'app/layouts/profiles/profile.service';
 import { LoginService } from 'app/login/login.service';
 import { PaymentService } from './payment.service';
 import { Wpayment } from './wpayment.model';
+import { Mockbin } from './mockbin.model';
 
 @Component({
   selector: 'jhi-payment-confirmation',
@@ -48,12 +49,11 @@ export class PaymentConfirmationComponent implements OnInit {
           });
       }
     });
-    this.paymentService.getPayment(history.state.data).subscribe((value: Wpayment) => {
-      this.wPayment = value;
+    this.paymentService.getPayment(history.state.data).subscribe((value: Mockbin) => {
       // eslint-disable-next-line no-console
-      console.log('payment value down');
+      console.log(value.text);
       // eslint-disable-next-line no-console
-      console.log(this.wPayment);
+      console.log(history.state.data);
       const sessionValue = localStorage.getItem('payment');
       // eslint-disable-next-line no-console
       console.log('session value down');
@@ -61,8 +61,10 @@ export class PaymentConfirmationComponent implements OnInit {
       console.log(sessionValue);
       if (sessionValue !== null) {
         const copy = JSON.parse(sessionValue) as Payment;
-        copy.paymentId = this.wPayment.createdPaymentOutput.payment.id;
+        copy.paymentId = value.text;
         this.paymentService.currentpayment = copy;
+        this.id = this.paymentService.currentpayment.paymentId;
+        this.amount = this.paymentService.currentpayment.paymentAmount;
         // eslint-disable-next-line no-console
         console.log('current payment down');
         // eslint-disable-next-line no-console

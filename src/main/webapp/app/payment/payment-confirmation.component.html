@@ -35,8 +35,8 @@
         <P> The Credit/Debit card payment has been processed.</P>
         <p>The collection will be visible in EDGAR in the next 15 minutes</p>
         <br />
-        <p>Transaction ID: {{ wPayment?.createdPaymentOutput?.payment?.id }}</p>
-        <p>Transation Amount: {{ wPayment?.createdPaymentOutput?.payment?.paymentOutput?.amountOfMoney?.amount | currency: 'USD' }}</p>
+        <p>Transaction ID: {{ id }}</p>
+        <p>Transation Amount: {{ amount | currency: 'USD' }}</p>
         <br />
         <p>An email confirmation will be sent to you shortly</p>
         <button

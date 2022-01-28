@@ -183,6 +183,7 @@ nohttp {
 }
 
 configurations {
+    jaxb
     providedRuntime
     implementation.exclude module: "spring-boot-starter-tomcat"
     all {
@@ -201,10 +202,50 @@ repositories {
 }
 
 dependencies {
+
     // import JHipster dependencies BOM
     if (!project.hasProperty("gae")) {
         implementation platform("tech.jhipster:jhipster-dependencies:${jhipsterDependenciesVersion}")
     }
+
+//paypals
+task genJaxb {
+	ext.sourcesDir = "$buildDir/generated-sources/jaxb"
+	ext.classesDir = "$buildDir/classes/jaxb"
+	ext.schema = "https://www.sandbox.paypal.com/wsdl/PayPalSvc.wsdl"
+
+	outputs.dir classesDir
+
+	doLast() {
+		project.ant {
+			taskdef name: "xjc", classname: "com.sun.tools.xjc.XJCTask",
+					classpath: configurations.jaxb.asPath
+			mkdir(dir: sourcesDir)
+			mkdir(dir: classesDir)
+
+				xjc(destdir: sourcesDir, schema: schema,
+						package: "com.company.PayPalSvc.wsdl") {
+						arg(value: "-wsdl")
+					produces(dir: sourcesDir, includes: "**/*.java")
+				}
+
+				javac(destdir: classesDir, source: 1.8, target: 1.8, debug: true,
+						debugLevel: "lines,vars,source",
+						classpath: configurations.jaxb.asPath) {
+					src(path: sourcesDir)
+					include(name: "**/*.java")
+					include(name: "*.java")
+					}
+
+				copy(todir: classesDir) {
+						fileset(dir: sourcesDir, erroronmissingdir: false) {
+						exclude(name: "**/*.java")
+				}
+			}
+		}
+	}
+}
+//paypal end
 
     // Use ", version: jhipsterDependenciesVersion, changing: true" if you want
     // to use a SNAPSHOT release instead of a stable release
@@ -267,8 +308,25 @@ dependencies {
     liquibaseRuntime "com.h2database:h2"
     developmentOnly "org.springframework.boot:spring-boot-devtools:${springBootVersion}"
     implementation group: "com.ingenico.connect.gateway", name: "connect-sdk-java", version:"6.27.0"
+    //paypal
+    implementation 'at.rechnerherz:aoprofiling-spring-boot-starter:1.0.0'
+    implementation ('org.springframework.boot:spring-boot-starter-web-services') {
+	exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+    }
+    implementation 'org.springframework.ws:spring-ws-core'
+    // For Java 11:
+    implementation 'org.glassfish.jaxb:jaxb-runtime'
+    implementation(files(genJaxb.classesDir).builtBy(genJaxb))
+    jaxb "com.sun.xml.bind:jaxb-xjc:2.1.7"
+    implementation files('gson-2.2.2.jar')
+    implementation files('merchantsdk-2.15.122.jar')
+    implementation files('paypal-core-1.7.2.jar')
     //jhipster-needle-gradle-dependency - JHipster will add additional dependencies here
 }
+
+//paypals
+
+//paypal end
 
 if (project.hasProperty("gae")) {
     task createPom {

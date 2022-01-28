@@ -32,11 +32,16 @@ export class PaymentReviewComponent implements OnInit {
       this.paymentService.getLastPayment().subscribe((value: Mockbin) => {
         this.currentPayment.lastPayment = +value.text;
       });
+    } else {
+      const sessionValue = localStorage.getItem('payment');
+      if (sessionValue !== null) {
+        this.paymentService.currentpayment = JSON.parse(sessionValue) as Payment;
+      }
     }
     this.route.queryParams.subscribe(params => {
-      if (params.hostedCheckoutId) {
+      if (params.token) {
         //this.paymentService.hostedCheckoutID = params.hostedCheckoutId;
-        this.router.navigate(['/payment-confirmation'], { state: { data: params.hostedCheckoutId } });
+        this.router.navigate(['/payment-confirmation'], { state: { data: params.token } });
       }
     });
   }
@@ -46,7 +51,7 @@ export class PaymentReviewComponent implements OnInit {
   }
   open(): void {
     const modalRef = this.modalService.open(NgbdModalContent);
-    this.url = 'https://payment.'.concat(this.url);
+    this.url = 'https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token='.concat(this.url);
     modalRef.componentInstance.url = this.url;
   }
 
@@ -66,9 +71,10 @@ export class PaymentReviewComponent implements OnInit {
     this.paymentService.currentpayment = this.currentPayment;
     localStorage.setItem('payment', JSON.stringify(this.paymentService.currentpayment));
 
-    this.paymentService.getInitiatePayment().subscribe((value: WPaymentSuccessResponse) => {
-      if (value.partialRedirectUrl !== 'error') {
-        this.url = value.partialRedirectUrl;
+    this.paymentService.getInitiatePayment().subscribe((value: Mockbin) => {
+      if (value.text !== '') {
+        this.url = value.text;
+        this.paymentService.token = value.text;
         this.open();
       }
     });
