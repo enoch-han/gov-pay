@@ -91,6 +91,7 @@ export class PaymentReviewComponent implements OnInit {
 export class NgbdModalContent {
   @Input() url: any;
   continuePressed = false;
+  cancelPressed = false;
 
   startValue = 10;
   constructor(public activeModal: NgbActiveModal, private modalService: NgbModal, @Inject(DOCUMENT) private document: Document) {
@@ -105,7 +106,7 @@ export class NgbdModalContent {
   }
 
   checkValue(): void {
-    if (this.startValue === 0 && this.continuePressed === false) {
+    if (this.startValue === 0 && this.continuePressed === false && this.cancelPressed === false) {
       //alert("countdown finished");
       this.modalService.dismissAll();
       this.goToUrl();
@@ -119,5 +120,10 @@ export class NgbdModalContent {
     this.continuePressed = true;
     this.modalService.dismissAll();
     this.goToUrl();
+  }
+
+  handleCancel(): void {
+    this.activeModal.close('Close click');
+    this.cancelPressed = true;
   }
 }
