@@ -80,7 +80,7 @@ public class PaymentResource {
     @GetMapping("/payments/companyName")
     public Mock getCompanyName() {
         // a mock that aquires company name
-        String uri = "https://mockbin.org/bin/dafff90d-eb30-45c2-9d30-13b819b81eb1";
+        String uri = "https://mockbin.org/bin/c725e6ca-adbe-4a1a-900a-63fea1c4b760";
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, Mock.class);
     }
@@ -88,7 +88,7 @@ public class PaymentResource {
     @GetMapping("/payments/lastPayment")
     public Mock getLastPayment() {
         // a mock that aquires last Payment date
-        String uri = "https://mockbin.org/bin/eab901ae-0524-4716-998c-da6d5602f755";
+        String uri = "https://mockbin.org/bin/5c7b0680-ce8a-41b2-b303-2f9bd9172196";
         RestTemplate restTemplate = new RestTemplate();
         return restTemplate.getForObject(uri, Mock.class);
     }
