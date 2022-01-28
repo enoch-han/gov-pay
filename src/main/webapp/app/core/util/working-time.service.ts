@@ -23,7 +23,6 @@ export class WorkingTime {
   }
   checkWorkingHour(): boolean {
     this.currentTime = new Date();
-    console.log(' ************************** time ******************');
     console.log(this.currentTime.getUTCHours());
     if (this.currentTime.getUTCHours() >= this.startTime.getUTCHours() && this.currentTime.getUTCHours() < this.endTime.getUTCHours()) {
       return true;
