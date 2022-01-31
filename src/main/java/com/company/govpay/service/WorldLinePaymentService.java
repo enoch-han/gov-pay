@@ -25,7 +25,7 @@ public class WorldLinePaymentService {
 
     String apiKeyId = "534823c062bedc24";
     String secretApiKey = "5frGHofPzr97BppEPZNVeZiPdZlblt1VmAb1bhImsvY=";
-    URL propertiesUrl = getClass().getResource("/com/company/govpay/WorldLinePayment.properties");
+    URL propertiesUrl = getClass().getResource("/WorldLinePayment.properties");
     String merchantId = "1070";
     String merchantName = "Merchant 1070";
 
@@ -41,10 +41,6 @@ public class WorldLinePaymentService {
         CommunicatorConfiguration configuration = Factory.createConfiguration(this.propertiesUrl.toURI(), apiKeyId, secretApiKey);
         System.out.println("after creating new client");
         return Factory.createClient(configuration);
-    }
-
-    private void setClient(Client copyClient) {
-        client = copyClient;
     }
 
     public CreateHostedCheckoutResponse initiatePayment(Payment value) {

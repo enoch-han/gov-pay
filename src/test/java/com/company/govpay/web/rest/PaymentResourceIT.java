@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PaymentResourceIT {
 
     private Payment testPayment;
+    private String testHostedCheckoutId = "061f838a-b58b-71ff-bc2b-52d2bd5395ae";
 
     @Autowired
     private MockMvc restPaymentMock;
@@ -105,5 +106,11 @@ public class PaymentResourceIT {
     }
 
     @Test
-    void testGetPaymentResponse() {}
+    void testGetPaymentResponse() throws IOException, Exception {
+        restPaymentMock
+            .perform(
+                post("/api/payments/getPaymentResponse").contentType(MediaType.APPLICATION_JSON).content(testHostedCheckoutId).with(csrf())
+            )
+            .andExpect(status().isOk());
+    }
 }
