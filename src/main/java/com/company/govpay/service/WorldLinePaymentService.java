@@ -41,10 +41,6 @@ public class WorldLinePaymentService {
         return Factory.createClient(configuration);
     }
 
-    private Client getSpecificClient(String metaInfo) throws URISyntaxException {
-        return client.withClientMetaInfo(metaInfo);
-    }
-
     public CreateHostedCheckoutResponse initiatePayment(Payment value) {
         CreateHostedCheckoutRequest body = new CreateHostedCheckoutRequest();
         try {
@@ -83,6 +79,11 @@ public class WorldLinePaymentService {
     }
 
     public GetHostedCheckoutResponse getPaymentResponse(String hostedCheckoutId) {
+        try {
+            client = getClient();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return client.merchant(merchantId).hostedcheckouts().get(hostedCheckoutId);
     }
 }
