@@ -35,16 +35,16 @@ public class PaymentResource {
 
     private final PaymentService paymentService;
 
-    private final UserService userService;
+    // private final UserService userService;
 
     private final WorldLinePaymentService worldLinePaymentService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    public PaymentResource(PaymentService paymentService, UserService userService, WorldLinePaymentService worldLinePaymentService) {
+    public PaymentResource(PaymentService paymentService, WorldLinePaymentService worldLinePaymentService) {
         this.paymentService = paymentService;
-        this.userService = userService;
+        // this.userService = userService;
         this.worldLinePaymentService = worldLinePaymentService;
     }
 
