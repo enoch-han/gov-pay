@@ -11,7 +11,9 @@ import com.company.govpay.repository.PaymentRepository;
 import com.company.govpay.security.AuthoritiesConstants;
 import com.company.govpay.service.PaymentService;
 import com.company.govpay.service.WorldLinePaymentService;
+import java.io.IOException;
 import java.time.Instant;
+import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,20 +24,13 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.transaction.annotation.Transactional;
 
 @AutoConfigureMockMvc
 @WithMockUser(authorities = AuthoritiesConstants.ADMIN)
 @IntegrationTest
 public class PaymentResourceIT {
-
-    @Autowired
-    private PaymentRepository testRepository;
-
-    @Autowired
-    private WorldLinePaymentService testWorldLineService;
-
-    @Autowired
-    private PaymentService testPaymentService;
 
     private Payment testPayment;
 
@@ -57,6 +52,7 @@ public class PaymentResourceIT {
     }
 
     @Test
+    @Transactional
     void testIfItCreatesPaymentWithValidPayment() throws Exception {
         System.out.println("hello i am in payment resource test");
         restPaymentMock
@@ -70,13 +66,43 @@ public class PaymentResourceIT {
     }
 
     @Test
-    void testGetCompanyName() {}
+    @Transactional
+    void testIfItCreatesPaymentWithInvalidPayment() throws Exception {
+        testPayment.setId(Long.valueOf(1));
+        restPaymentMock
+            .perform(
+                post("/api/payments")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(testPayment))
+                    .with(csrf())
+            )
+            .andExpect(status().isBadRequest());
+    }
 
     @Test
-    void testGetInititatePayment() {}
+    @Transactional
+    void testGetCompanyName() throws Exception {
+        restPaymentMock.perform(get("/api/payments/companyName").with(csrf())).andExpect(status().isOk());
+    }
 
     @Test
-    void testGetLastPayment() {}
+    void testGetInititatePayment() throws IOException, Exception {
+        testPayment.setPaymentId(null);
+        restPaymentMock
+            .perform(
+                post("/api/payments/initiate")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(testPayment))
+                    .with(csrf())
+            )
+            .andExpect(status().isOk());
+    }
+
+    @Test
+    @Transactional
+    void testGetLastPayment() throws Exception {
+        restPaymentMock.perform(get("/api/payments/lastPayment").with(csrf())).andExpect(status().isOk());
+    }
 
     @Test
     void testGetPaymentResponse() {}

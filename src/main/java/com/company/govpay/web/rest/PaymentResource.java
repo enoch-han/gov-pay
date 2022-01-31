@@ -5,6 +5,7 @@ import com.company.govpay.domain.Payment;
 import com.company.govpay.service.PaymentService;
 import com.company.govpay.service.UserService;
 import com.company.govpay.service.WorldLinePaymentService;
+import com.company.govpay.web.rest.errors.BadRequestAlertException;
 import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.CreateHostedCheckoutResponse;
 import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.GetHostedCheckoutResponse;
 import java.net.URI;
@@ -58,12 +59,7 @@ public class PaymentResource {
     public ResponseEntity<Payment> createPayment(@Valid @RequestBody Payment payment) throws URISyntaxException {
         log.debug("REST request to save Payment : {}", payment);
         if (payment.getId() != null) {
-            return ResponseEntity
-                .badRequest()
-                .headers(
-                    HeaderUtil.createFailureAlert(applicationName, true, ENTITY_NAME, "idexists", "A new payment cannot already have an ID")
-                )
-                .body(null);
+            throw new BadRequestAlertException("A new payment cannot already have an ID", "paymentManagement", "idexists");
         }
 
         System.out.println("before user id setting");
