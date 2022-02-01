@@ -1,9 +1,10 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ApplicationConfigService } from 'app/core/config/application-config.service';
+
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-import { Payment } from './payment.model';
-import { PaymentService } from './payment.service';
+import { Payment } from 'app/payment/payment.model';
+import { PaymentService } from 'app/payment/payment.service';
 
 function prepareTestPayment(choice: number = 2): Payment {
   // returns a test payment
@@ -35,7 +36,6 @@ function prepareTestPayment(choice: number = 2): Payment {
 describe('Payment Service', () => {
   let paymentService: PaymentService;
   let httpMock: HttpTestingController;
-  let applicationConfigService: ApplicationConfigService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -44,18 +44,78 @@ describe('Payment Service', () => {
     });
     paymentService = TestBed.inject(PaymentService);
     httpMock = TestBed.inject(HttpTestingController);
-    applicationConfigService = TestBed.inject(ApplicationConfigService);
   });
 
   describe('Save Payment', () => {
-    it('should call payment saving endpoint wiht correct values', () => {
+    it('should call payment saving with correct endpoint and value', () => {
       // GIVEN
-      const testPayment = prepareTestPayment();
+      const testPayment = prepareTestPayment(2);
       paymentService.currentpayment = testPayment;
 
       // WHEN
       paymentService.savePayment().subscribe();
-      const testRequest = httpMock.expectOne({ method: 'POST', url: applicationConfigService.getEndpointFor('api/payments') });
+      const testRequest = httpMock.expectOne({ method: 'POST', url: '/api/payments' });
+      testRequest.flush({});
+
+      // THEN
+      expect(testRequest.request.body).toEqual(testPayment);
+    });
+  });
+
+  describe('Get Payments', () => {
+    it('should call get payments with correct endpoint', () => {
+      // WHEN
+      paymentService.getPayments().subscribe();
+
+      //THEN
+      httpMock.expectOne({ method: 'GET', url: 'api/payments' });
+    });
+  });
+
+  describe('Get Payment', () => {
+    it('should call get payment with correct endpoint and value', () => {
+      // GIVEN
+      const testId = '1';
+
+      // WHEN
+      paymentService.getPayment(testId).subscribe();
+      const testRequest = httpMock.expectOne({ method: 'POST', url: '/api/payments/getPaymentResponse' });
+      testRequest.flush({});
+
+      //THEN
+      expect(testRequest.request.body).toEqual(testId);
+    });
+  });
+
+  describe('Get Company Name', () => {
+    it('should call get company name with correct endpoint', () => {
+      // WHEN
+      paymentService.getCompanyName().subscribe();
+
+      //THEN
+      httpMock.expectOne({ method: 'GET', url: '/api/payments/companyName/' });
+    });
+  });
+
+  describe('Get Last Payment', () => {
+    it('should call get last payment with correct endpoint', () => {
+      // WHEN
+      paymentService.getLastPayment().subscribe();
+
+      //THEN
+      httpMock.expectOne({ method: 'GET', url: '/api/payments/lastPayment/' });
+    });
+  });
+
+  describe('Get Initiate Payment', () => {
+    it('should call get initiate payment with correct endpoint and value', () => {
+      // GIVEN
+      const testPayment = prepareTestPayment(2);
+      paymentService.currentpayment = testPayment;
+
+      // WHEN
+      paymentService.getInitiatePayment().subscribe();
+      const testRequest = httpMock.expectOne({ method: 'POST', url: '/api/payments/initiate' });
       testRequest.flush({});
 
       // THEN
