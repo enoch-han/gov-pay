@@ -5,7 +5,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Payment } from './payment.model';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
@@ -14,7 +13,7 @@ export class PaymentService {
   // eslint-disable-next-line @typescript-eslint/member-ordering
   public hostedCheckoutID!: string;
 
-  constructor(private http: HttpClient, private applicationConfigService: ApplicationConfigService) {}
+  constructor(private http: HttpClient) {}
 
   savePayment(): Observable<Payment> {
     const copy: Payment = Object.assign({}, this.currentpayment);
