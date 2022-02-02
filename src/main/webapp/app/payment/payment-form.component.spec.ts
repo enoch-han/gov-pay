@@ -1,7 +1,7 @@
 /* eslint-disable object-shorthand */
 /* eslint-disable no-console */
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
@@ -103,7 +103,7 @@ describe('Payment Form Component', () => {
     it('cik input field should call the format cik method on focus out', () => {
       // GIVEN
       jest.spyOn(fixture.componentInstance, 'formatCik');
-      const testCik = '1234567';
+      const testCik = '12345678';
       const cikDea = fixture.debugElement.query(By.css('#field_cik'));
       cikDea.nativeElement.value = testCik;
       fixture.detectChanges();

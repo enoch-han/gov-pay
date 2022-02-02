@@ -66,6 +66,7 @@
         <p>{{ currentPayment.phoneNumber }}</p>
 
         <button
+          id="back_button"
           type="button"
           class="btn btn-outline-primary"
           (click)="handleBack()"
@@ -74,6 +75,7 @@
           <span class="fa fa-ban"></span>&nbsp;<span><b>Back</b></span>
         </button>
         <button
+          id="proceed_button"
           type="submit"
           class="btn btn-outline-primary"
           (click)="handleProceed()"

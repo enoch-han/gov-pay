@@ -4,7 +4,7 @@ import { Router, RouteReuseStrategy, ActivatedRoute } from '@angular/router';
 import { PaymentService } from './payment.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Payment } from './payment.model';
-import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DOCUMENT } from '@angular/common';
 import { JsonpClientBackend } from '@angular/common/http';
 
@@ -16,12 +16,8 @@ import { JsonpClientBackend } from '@angular/common/http';
 export class PaymentReviewComponent implements OnInit {
   currentPayment!: Payment;
   url!: string;
-  constructor(
-    public paymentService: PaymentService,
-    private router: Router,
-    private modalService: NgbModal,
-    private route: ActivatedRoute
-  ) {}
+  modalRef!: NgbModalRef;
+  constructor(public paymentService: PaymentService, public router: Router, public modalService: NgbModal, public route: ActivatedRoute) {}
   ngOnInit(): void {
     // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     if (this.paymentService.currentpayment !== undefined) {
@@ -45,9 +41,9 @@ export class PaymentReviewComponent implements OnInit {
     this.router.navigate(['']);
   }
   open(): void {
-    const modalRef = this.modalService.open(NgbdModalContent);
+    this.modalRef = this.modalService.open(NgbdModalContent);
     this.url = 'https://payment.'.concat(this.url);
-    modalRef.componentInstance.url = this.url;
+    this.modalRef.componentInstance.url = this.url;
   }
 
   handleProceed(): void {
@@ -87,7 +83,7 @@ export class NgbdModalContent {
   continuePressed = false;
 
   startValue = 10;
-  constructor(public activeModal: NgbActiveModal, private modalService: NgbModal, @Inject(DOCUMENT) private document: Document) {
+  constructor(public activeModal: NgbActiveModal, public modalService: NgbModal, @Inject(DOCUMENT) public document: Document) {
     this.initiateCountdown();
   }
 
