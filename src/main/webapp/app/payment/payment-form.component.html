@@ -156,6 +156,7 @@
             />
           </div>
           <button
+            id="clear_button"
             type="button"
             class="btn btn-default"
             (click)="handleClear()"
@@ -164,6 +165,7 @@
             <span class="fa fa-ban"></span>&nbsp;<span><b>Clear</b></span>
           </button>
           <button
+            id="next_button"
             type="submit"
             [disabled]="paymentForm.form.invalid"
             class="btn btn-default"
