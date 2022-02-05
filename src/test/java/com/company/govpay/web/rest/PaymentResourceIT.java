@@ -33,7 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PaymentResourceIT {
 
     private Payment testPayment;
-    private String testHostedCheckoutId = "061f838a-b58b-71ff-bc2b-52d2bd5395ae";
+    private String testHostedCheckoutId = "061fbdeb-ce14-71ff-901d-5540f82e3ad6";
 
     @Autowired
     private MockMvc restPaymentMock;

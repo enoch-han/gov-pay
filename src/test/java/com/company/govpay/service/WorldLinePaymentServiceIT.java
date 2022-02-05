@@ -26,9 +26,9 @@ public class WorldLinePaymentServiceIT {
 
     private String testHostedCheckoutUnprocessedId = "061f6ff1-3b40-71ff-94fe-9b2dd6e229cd";
     private String testHostedCheckoutInvalidId = "061f6ff1-3b40-71ff-94fe-9b2dd12329cd";
-    private String testHostedCheckoutValidId = "061f838a-b58b-71ff-bc2b-52d2bd5395ae";
+    private String testHostedCheckoutValidId = "061fbdeb-ce14-71ff-901d-5540f82e3ad6";
     private String partialUrl =
-        "pay1.sandbox.secured-by-ingenico.com/checkout/1070-a735bde6b8304299861a6136573f6d06:061f7066-a253-71ff-9793-700df942fd07:be4c9579878e4eb188e62de337df961c";
+        "pay1.sandbox.secured-by-ingenico.com/checkout/1070-ec83322a415c4cdb84e9ac92b6a24399:061fbdeb-ce14-71ff-901d-5540f82e3ad6:a22c5034db314c55868b27a77ef26e71";
 
     @BeforeEach
     public void init() {
@@ -47,7 +47,10 @@ public class WorldLinePaymentServiceIT {
     @Test
     void testIfInitiatesPaymentSuccessfullyWithCorrectPayment() {
         //test the response of initiate payment with correct payment
-        System.out.println(worldLinePaymentService.initiatePayment(testPayment).getHostedCheckoutId());
+        CreateHostedCheckoutResponse testResponse = worldLinePaymentService.initiatePayment(testPayment);
+        System.out.println(testResponse.getHostedCheckoutId());
+        System.out.println(testResponse.getPartialRedirectUrl());
+        //System.out.println(worldLinePaymentService.initiatePayment(testPayment).getHostedCheckoutId());
         assertThat(worldLinePaymentService.initiatePayment(testPayment)).isInstanceOf(CreateHostedCheckoutResponse.class);
     }
 
