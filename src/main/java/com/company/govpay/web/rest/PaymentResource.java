@@ -1,10 +1,13 @@
 package com.company.govpay.web.rest;
 
+import com.company.govpay.domain.Message;
 import com.company.govpay.domain.Mock;
 import com.company.govpay.domain.Payment;
 import com.company.govpay.service.PaymentService;
 import com.company.govpay.service.UserService;
 import com.company.govpay.service.WorldLinePaymentService;
+import com.company.govpay.service.queue.MessageConsumer;
+import com.company.govpay.service.queue.MessagePublisher;
 import com.company.govpay.web.rest.errors.BadRequestAlertException;
 import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.CreateHostedCheckoutResponse;
 import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.GetHostedCheckoutResponse;
@@ -36,6 +39,8 @@ public class PaymentResource {
 
     private final PaymentService paymentService;
 
+    private final MessagePublisher messagePublisher;
+
     // private final UserService userService;
 
     private final WorldLinePaymentService worldLinePaymentService;
@@ -43,10 +48,15 @@ public class PaymentResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    public PaymentResource(PaymentService paymentService, WorldLinePaymentService worldLinePaymentService) {
+    public PaymentResource(
+        PaymentService paymentService,
+        WorldLinePaymentService worldLinePaymentService,
+        MessagePublisher messagePublisher
+    ) {
         this.paymentService = paymentService;
         // this.userService = userService;
         this.worldLinePaymentService = worldLinePaymentService;
+        this.messagePublisher = messagePublisher;
     }
 
     // @GetMapping("/payments")
@@ -62,15 +72,19 @@ public class PaymentResource {
             throw new BadRequestAlertException("A new payment cannot already have an ID", "paymentManagement", "idexists");
         }
 
-        System.out.println("before user id setting");
-        //payment.setUserId(userService.getUserWithAuthorities().get().getId());
-        System.out.println("after user id setting");
-        Payment result = paymentService.save(payment);
-        System.out.println("after saving data");
-        return ResponseEntity
-            .created(new URI("/api/payments/" + result.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
-            .body(result);
+        Message message = new Message();
+        message.setSource("some place");
+        message.setMessage("needs to be saved");
+        message.setPayload(payment);
+        if (messagePublisher.publishMessage(message)) {
+            System.out.println("after saving data");
+            return ResponseEntity
+                .created(new URI("/api/payments/" + payment.getPhoneNumber()))
+                .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, payment.getPhoneNumber().toString()))
+                .body(payment);
+        } else {
+            return (ResponseEntity) ResponseEntity.badRequest();
+        }
     }
 
     @GetMapping("/payments/companyName")

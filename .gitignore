@@ -4,6 +4,7 @@
 /src/main/webapp/content/css/main.css
 /build/resources/main/static/**
 /src/test/javascript/coverage/
+/apache-activemq-5.16.3
 
 ######################
 # Node
