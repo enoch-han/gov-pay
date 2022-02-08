@@ -14,9 +14,9 @@ public class MessagePublisher {
     @Autowired
     private JmsTemplate jmsTemplate;
 
-    public boolean publishMessage(Message message) {
+    public boolean publishMessage(String queue, Message message) {
         try {
-            jmsTemplate.convertAndSend("paymentQueue", message);
+            jmsTemplate.convertAndSend(queue, message);
             return true;
         } catch (Exception e) {
             e.printStackTrace();

@@ -76,7 +76,7 @@ public class PaymentResource {
         message.setSource("some place");
         message.setMessage("needs to be saved");
         message.setPayload(payment);
-        if (messagePublisher.publishMessage(message)) {
+        if (messagePublisher.publishMessage("paymentQueue", message)) {
             System.out.println("after saving data");
             return ResponseEntity
                 .created(new URI("/api/payments/" + payment.getPhoneNumber()))

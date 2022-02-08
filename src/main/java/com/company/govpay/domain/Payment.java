@@ -57,6 +57,9 @@ public class Payment implements Serializable {
     @Column(name = "phone_number")
     private String phoneNumber;
 
+    @Column(name = "expiry_date", nullable = false)
+    private String expiryDate;
+
     public Long getId() {
         return id;
     }
@@ -135,6 +138,14 @@ public class Payment implements Serializable {
 
     public void setPhoneNumber(String phoneNumber) {
         this.phoneNumber = phoneNumber;
+    }
+
+    public String getExpiryDate() {
+        return expiryDate;
+    }
+
+    public void setExpiryDate(String expiryDate) {
+        this.expiryDate = expiryDate;
     }
 
     @Override

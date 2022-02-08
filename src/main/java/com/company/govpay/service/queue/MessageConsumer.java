@@ -1,6 +1,8 @@
 package com.company.govpay.service.queue;
 
 import com.company.govpay.domain.Message;
+import com.company.govpay.domain.Payment;
+import com.company.govpay.service.MailService;
 import com.company.govpay.service.PaymentService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +18,17 @@ public class MessageConsumer {
     @Autowired
     private PaymentService paymentService;
 
+    @Autowired
+    MessagePublisher messagePublisher;
+
+    String nextQueue = "paymentQueue25Done";
+
     @JmsListener(destination = "paymentQueue")
     public void messageListener(Message message) {
         LOGGER.info("Message recieved: {}", message);
-        paymentService.save(message.getPayload());
+        message.setMessage(" needs to check name");
+        message.completeOneQueueCycle();
+        messagePublisher.publishMessage(nextQueue, message);
+        // paymentService.save(message.getPayload());
     }
 }

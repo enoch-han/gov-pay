@@ -37,6 +37,9 @@
             <column name="phone_number" type="varchar(255)">
                 <constraints nullable="false" />
             </column>
+            <column name="expiry_date" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
         </createTable>
 
             

@@ -3,6 +3,7 @@ export class Payment {
   public paymentId?: string;
   public lastPayment?: number;
   public companyName?: string;
+  public expiryDate?: string;
 
   constructor(
     public cik?: string,

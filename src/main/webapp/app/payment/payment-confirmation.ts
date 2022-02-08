@@ -62,6 +62,7 @@ export class PaymentConfirmationComponent implements OnInit {
       if (sessionValue !== null) {
         const copy = JSON.parse(sessionValue) as Payment;
         copy.paymentId = this.wPayment.createdPaymentOutput.payment.id;
+        copy.expiryDate = this.wPayment.createdPaymentOutput.payment.paymentOutput.cardPaymentMethodSpecificOutput.card.expiryDate;
         this.paymentService.currentpayment = copy;
         // eslint-disable-next-line no-console
         console.log('current payment down');
