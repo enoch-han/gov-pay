@@ -90,7 +90,7 @@ public class MessageConsumer {
         } else {
             if (valueRecieved) {
                 mail.sendExpiryDateValidationFailureMail(message.getPayload());
-                ValueRecieved = false;
+                valueRecieved = false;
             } else {
                 LOGGER.warn("completion halted due to some error on the request expiry date");
             }
