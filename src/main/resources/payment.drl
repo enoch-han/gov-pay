@@ -1,0 +1,46 @@
+import com.company.govpay.domain.Message;
+import com.company.govpay.domain.CheckType;
+
+global String nameCheckURL;
+global String expiryDateCheckURL;
+global String phoneCheckURL;
+global String queueFor25;
+global String queueFor50;
+global String queueFor75;
+global String queueFor100;
+
+rule "Completed percentage is 0"
+    when
+        message : Message( completedPercentage == 0 );
+    then
+        message.setCheckURL(nameCheckURL);
+        message.setNextQueue (queueFor25);
+        message.setCheck(CheckType.NAME);
+end
+
+rule "Completed percentage is 25"
+    when
+        message : Message( completedPercentage == 25 );
+    then
+        message.setCheckURL(expiryDateCheckURL);
+        message.setNextQueue(queueFor50);
+        message.setCheck(CheckType.EXPIRYDATE);
+end
+
+rule "Completed percentage is 50"
+    when
+        message : Message( completedPercentage == 50 );
+    then
+        message.setCheckURL(phoneCheckURL);
+        message.setNextQueue(queueFor75);
+        message.setCheck(CheckType.PHONE);
+end
+
+rule "Completed percentage is 75"
+    when
+        message : Message( completedPercentage == 75 );
+    then
+        message.setCheckURL("");
+        message.setNextQueue(queueFor100);
+        message.setCheck(CheckType.COMPLETED);
+end
