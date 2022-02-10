@@ -12,7 +12,7 @@ public class Message implements Serializable {
     private CheckType check = CheckType.NONE;
     private String checkURL;
     private String nextQueue;
-    private int completedPercentage = 0;
+    private int completionPercentage;
 
     public String getSource() {
         return source;
@@ -39,15 +39,15 @@ public class Message implements Serializable {
     }
 
     public int getCompletionPercentage() {
-        return completedPercentage;
+        return completionPercentage;
     }
 
     public void setCompletionPercentage(int percentage) {
-        this.completedPercentage = percentage;
+        this.completionPercentage = percentage;
     }
 
     public void completeOneQueueCycle() {
-        this.completedPercentage = this.completedPercentage + 25;
+        this.completionPercentage = this.completionPercentage + 25;
     }
 
     public CheckType getCheck() {
@@ -89,8 +89,8 @@ public class Message implements Serializable {
             checkURL +
             ", nextQueue=" +
             nextQueue +
-            ", completedPercentage=" +
-            completedPercentage +
+            ", completionPercentage=" +
+            completionPercentage +
             "]"
         );
     }

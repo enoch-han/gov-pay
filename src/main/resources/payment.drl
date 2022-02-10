@@ -10,37 +10,45 @@ global String queueFor75;
 global String queueFor100;
 
 rule "Completed percentage is 0"
+dialect "mvel"
+no-loop
     when
-        message : Message( completedPercentage == 0 );
+        $message : Message(completionPercentage == 0);
     then
-        message.setCheckURL(nameCheckURL);
-        message.setNextQueue (queueFor25);
-        message.setCheck(CheckType.NAME);
+        $message.setCheckURL(nameCheckURL);
+        $message.setNextQueue (queueFor25);
+        $message.setCheck(CheckType.NAME);
 end
 
 rule "Completed percentage is 25"
+dialect "mvel"
+no-loop
     when
-        message : Message( completedPercentage == 25 );
+        $message : Message(completionPercentage == 25);
     then
-        message.setCheckURL(expiryDateCheckURL);
-        message.setNextQueue(queueFor50);
-        message.setCheck(CheckType.EXPIRYDATE);
+        $message.setCheckURL(expiryDateCheckURL);
+        $message.setNextQueue(queueFor50);
+        $message.setCheck(CheckType.EXPIRYDATE);
 end
 
 rule "Completed percentage is 50"
+dialect "mvel"
+no-loop
     when
-        message : Message( completedPercentage == 50 );
+        $message : Message(completionPercentage == 50);
     then
-        message.setCheckURL(phoneCheckURL);
-        message.setNextQueue(queueFor75);
-        message.setCheck(CheckType.PHONE);
+        $message.setCheckURL(phoneCheckURL);
+        $message.setNextQueue(queueFor75);
+        $message.setCheck(CheckType.PHONE);
 end
 
 rule "Completed percentage is 75"
+dialect "mvel"
+no-loop
     when
-        message : Message( completedPercentage == 75 );
+        $message : Message(completionPercentage == 75);
     then
-        message.setCheckURL("");
-        message.setNextQueue(queueFor100);
-        message.setCheck(CheckType.COMPLETED);
+        $message.setCheckURL("");
+        $message.setNextQueue(queueFor100);
+        $message.setCheck(CheckType.COMPLETED);
 end
