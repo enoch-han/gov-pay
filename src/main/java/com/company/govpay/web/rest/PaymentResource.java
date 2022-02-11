@@ -73,11 +73,11 @@ public class PaymentResource {
         }
 
         Message message = new Message();
-        message.setSource("some place");
-        message.setMessage("needs to be saved");
+        message.setSource("rest resource");
+        message.setMessage("payment needs to validated");
         message.setPayload(payment);
         if (messagePublisher.publishMessage("paymentQueue", message)) {
-            System.out.println("after saving data");
+            System.out.println("after payment validation started");
             return ResponseEntity
                 .created(new URI("/api/payments/" + payment.getPhoneNumber()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, payment.getPhoneNumber().toString()))

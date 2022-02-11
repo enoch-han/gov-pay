@@ -38,6 +38,7 @@ public class MessageConsumer {
         // listens for 0 percent completed queue
 
         LOGGER.info("Message recieved: {}", message);
+        message.setSource("payment queue");
         message.setMessage(" needs to check name");
         droolService.insertOrUpdate(message);
 
@@ -51,12 +52,12 @@ public class MessageConsumer {
 
         LOGGER.info("Message recieved in messageConsumer25Done: {}", message);
         LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
+        message.setSource("payment queue 25 percent completed");
         message.setMessage(" needs to check expiry date");
-        droolService.insertOrUpdate(message);
 
         if (validate(message) && valueRecieved) {
             // if it has valid name it add the percentage and pass it to the next stage
-
+            droolService.insertOrUpdate(message);
             message.completeOneQueueCycle();
             LOGGER.info(" Completion percentage aftere proccessed in the consumer: {}", message.getCompletionPercentage());
             messagePublisher.publishMessage(message.getNextQueue(), message);
@@ -77,12 +78,13 @@ public class MessageConsumer {
 
         LOGGER.info("Message recieved in messageConsumer50Done: {}", message);
         LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
+        message.setSource("payment queue 50 percent completed");
         message.setMessage(" needs to check phone number");
-        droolService.insertOrUpdate(message);
 
         if (validate(message) && valueRecieved) {
             // if it has valid name it add the percentage and pass it to the next stage
 
+            droolService.insertOrUpdate(message);
             message.completeOneQueueCycle();
             LOGGER.info(" Completion percentage after proccessed in the consumer: {}", message.getCompletionPercentage());
             messagePublisher.publishMessage(message.getNextQueue(), message);
@@ -101,11 +103,12 @@ public class MessageConsumer {
     public void message75PercentListener(Message message) {
         LOGGER.info("Message recieved in messageConsumer75Done: {}", message);
         LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
-        droolService.insertOrUpdate(message);
+        message.setSource("payment queue 75 percent completed");
 
         if (validate(message) && valueRecieved) {
             // if it has valid name it add the percentage and pass it to the next stage
 
+            droolService.insertOrUpdate(message);
             message.completeOneQueueCycle();
             LOGGER.info(" Completion percentage after proccessed in the consumer: {}", message.getCompletionPercentage());
             messagePublisher.publishMessage(message.getNextQueue(), message);
@@ -124,6 +127,7 @@ public class MessageConsumer {
     public void message100PercentListener(Message message) {
         LOGGER.info("Message recieved in messageConsumer100Done: {}", message);
         LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
+        message.setSource("payment queue 100 percent completed");
         message.setMessage("payment completed");
         droolService.insertOrUpdate(message);
 

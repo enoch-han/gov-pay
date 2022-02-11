@@ -12,7 +12,7 @@ public class Message implements Serializable {
     private CheckType check = CheckType.NONE;
     private String checkURL;
     private String nextQueue;
-    private int completionPercentage;
+    private int completionPercentage = 0;
 
     public String getSource() {
         return source;
