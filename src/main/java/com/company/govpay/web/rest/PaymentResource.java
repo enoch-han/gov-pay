@@ -4,19 +4,14 @@ import com.company.govpay.domain.Message;
 import com.company.govpay.domain.Mock;
 import com.company.govpay.domain.Payment;
 import com.company.govpay.service.PaymentService;
-import com.company.govpay.service.UserService;
 import com.company.govpay.service.WorldLinePaymentService;
-import com.company.govpay.service.queue.MessageConsumer;
 import com.company.govpay.service.queue.MessagePublisher;
 import com.company.govpay.web.rest.errors.BadRequestAlertException;
 import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.CreateHostedCheckoutResponse;
 import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.GetHostedCheckoutResponse;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Optional;
 import javax.validation.Valid;
-import org.apache.http.HttpStatus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -58,12 +53,6 @@ public class PaymentResource {
         this.worldLinePaymentService = worldLinePaymentService;
         this.messagePublisher = messagePublisher;
     }
-
-    // @GetMapping("/payments")
-    // public List<Payment> getAllPayments() {
-    //     log.debug("REST request to get all Payments");
-    //     return paymentService.findAllByUser(userService.getUserWithAuthorities().get().getId());
-    // }
 
     @PostMapping("/payments")
     public ResponseEntity<Payment> createPayment(@Valid @RequestBody Payment payment) throws URISyntaxException {

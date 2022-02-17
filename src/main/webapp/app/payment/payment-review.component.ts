@@ -47,18 +47,6 @@ export class PaymentReviewComponent implements OnInit {
   }
 
   handleProceed(): void {
-    // this.paymentService.getPayments().subscribe((value: Payment[]) => {
-    //     if (value[0].id) {
-    //         const preparedString = "/payment/payment-confirmation/".concat(value[0].id);
-    //         this.router.navigate([preparedString]);
-    //     }
-    // })
-    // this.paymentService.savePayment().subscribe((value: Payment) => {
-    //   if (value.id !== undefined) {
-    //     const preparedString = '/payment/payment-confirmation/' + value.id;
-    //     this.router.navigate([preparedString]);
-    //   }
-    // });
     this.paymentService.currentpayment = this.currentPayment;
     localStorage.setItem('payment', JSON.stringify(this.paymentService.currentpayment));
 

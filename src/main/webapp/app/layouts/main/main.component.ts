@@ -1,4 +1,3 @@
-import { PaymentFormComponent } from './../../payment/payment-form.component';
 import { Component, OnInit } from '@angular/core';
 import { Title } from '@angular/platform-browser';
 import { Router, ActivatedRouteSnapshot, NavigationEnd } from '@angular/router';
@@ -42,10 +41,7 @@ export class MainComponent implements OnInit {
           })
           .subscribe(() => {
             this.accountService.identity().subscribe();
-            //this.router.navigate(["/payment/payment-form"]);
           });
-      } else {
-        //this.router.navigate(["/payment/payment-form"]);
       }
     });
 

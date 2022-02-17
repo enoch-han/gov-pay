@@ -42,7 +42,7 @@ export class PaymentService {
   }
 
   getInitiatePayment(): Observable<WPaymentSuccessResponse> {
-    //returns the redirect url if succesful in WPaymentSuccessResponse object
+    // returns the redirect url if succesful in WPaymentSuccessResponse object
     const copy: Payment = Object.assign({}, this.currentpayment);
     return this.http.post<WPaymentSuccessResponse>('/api/payments/initiate', copy);
   }

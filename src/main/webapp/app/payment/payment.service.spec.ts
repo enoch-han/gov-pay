@@ -1,6 +1,5 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApplicationConfigService } from 'app/core/config/application-config.service';
 
 /* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Payment } from 'app/payment/payment.model';

@@ -5,7 +5,6 @@ import static java.net.URLDecoder.decode;
 import java.io.File;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
-import java.util.*;
 import javax.servlet.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -95,7 +94,7 @@ public class WebConfigurer implements ServletContextInitializer, WebServerFactor
         if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
             log.debug("Registering CORS filter");
             source.registerCorsConfiguration("/mockbin.org/**", config);
-            source.registerCorsConfiguration("/*/**", config);
+            source.registerCorsConfiguration("/eu.sandbox.api-ingenico.com/**", config);
             source.registerCorsConfiguration("/api/**", config);
             source.registerCorsConfiguration("/management/**", config);
             source.registerCorsConfiguration("/v2/api-docs", config);

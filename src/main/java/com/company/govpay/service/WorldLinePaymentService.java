@@ -15,7 +15,6 @@ import com.ingenico.connect.gateway.sdk.java.domain.payment.definitions.Order;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.UUID;
-import org.ehcache.impl.internal.classes.ClassInstanceConfiguration;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
