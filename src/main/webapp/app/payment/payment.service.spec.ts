@@ -1,11 +1,9 @@
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { Payment } from 'app/payment/payment.model';
 import { PaymentService } from 'app/payment/payment.service';
 
-function prepareTestPayment(choice: number = 2): Payment {
+function prepareTestPayment(choice = 2): Payment {
   // returns a test payment
   const testPayment = new Payment();
   testPayment.cik = '1234567';
@@ -66,7 +64,7 @@ describe('Payment Service', () => {
       // WHEN
       paymentService.getPayments().subscribe();
 
-      //THEN
+      // THEN
       httpMock.expectOne({ method: 'GET', url: 'api/payments' });
     });
   });
@@ -81,7 +79,7 @@ describe('Payment Service', () => {
       const testRequest = httpMock.expectOne({ method: 'POST', url: '/api/payments/getPaymentResponse' });
       testRequest.flush({});
 
-      //THEN
+      // THEN
       expect(testRequest.request.body).toEqual(testId);
     });
   });
@@ -91,7 +89,7 @@ describe('Payment Service', () => {
       // WHEN
       paymentService.getCompanyName().subscribe();
 
-      //THEN
+      // THEN
       httpMock.expectOne({ method: 'GET', url: '/api/payments/companyName/' });
     });
   });
@@ -101,7 +99,7 @@ describe('Payment Service', () => {
       // WHEN
       paymentService.getLastPayment().subscribe();
 
-      //THEN
+      // THEN
       httpMock.expectOne({ method: 'GET', url: '/api/payments/lastPayment/' });
     });
   });

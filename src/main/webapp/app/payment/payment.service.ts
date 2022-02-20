@@ -9,18 +9,13 @@ import { Payment } from './payment.model';
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
   public currentpayment!: Payment;
-  private resourceUrl = 'api/payments';
-  // eslint-disable-next-line @typescript-eslint/member-ordering
   public hostedCheckoutID!: string;
+  private resourceUrl = 'api/payments';
 
   constructor(private http: HttpClient) {}
 
   savePayment(): Observable<Payment> {
     const copy: Payment = Object.assign({}, this.currentpayment);
-    // eslint-disable-next-line no-console
-    console.log('in save payment method');
-    // eslint-disable-next-line no-console
-    console.log(copy);
     return this.http.post<Payment>('/api/payments', copy);
   }
 
@@ -29,7 +24,6 @@ export class PaymentService {
   }
 
   getPayment(id: string): Observable<Wpayment> {
-    // eslint-disable-next-line @typescript-eslint/ban-types
     return this.http.post<Wpayment>('/api/payments/getPaymentResponse', id);
   }
 

@@ -1,12 +1,11 @@
 import { WPaymentSuccessResponse } from './wpayment -success-response.model';
 import { Mockbin } from './mockbin.model';
-import { Router, RouteReuseStrategy, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { PaymentService } from './payment.service';
 import { Component, Inject, Input, OnInit } from '@angular/core';
 import { Payment } from './payment.model';
 import { NgbActiveModal, NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { DOCUMENT } from '@angular/common';
-import { JsonpClientBackend } from '@angular/common/http';
 
 @Component({
   selector: 'jhi-payment-review',
@@ -19,19 +18,16 @@ export class PaymentReviewComponent implements OnInit {
   modalRef!: NgbModalRef;
   constructor(public paymentService: PaymentService, public router: Router, public modalService: NgbModal, public route: ActivatedRoute) {}
   ngOnInit(): void {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.paymentService.currentpayment !== undefined) {
-      this.currentPayment = this.paymentService.currentpayment;
-      this.paymentService.getCompanyName().subscribe((value: Mockbin) => {
-        this.currentPayment.companyName = value.text;
-      });
-      this.paymentService.getLastPayment().subscribe((value: Mockbin) => {
-        this.currentPayment.lastPayment = +value.text;
-      });
-    }
+    this.currentPayment = this.paymentService.currentpayment;
+    this.paymentService.getCompanyName().subscribe((value: Mockbin) => {
+      this.currentPayment.companyName = value.text;
+    });
+    this.paymentService.getLastPayment().subscribe((value: Mockbin) => {
+      this.currentPayment.lastPayment = +value.text;
+    });
+
     this.route.queryParams.subscribe(params => {
       if (params.hostedCheckoutId) {
-        //this.paymentService.hostedCheckoutID = params.hostedCheckoutId;
         this.router.navigate(['/payment-confirmation'], { state: { data: params.hostedCheckoutId } });
       }
     });
@@ -58,7 +54,6 @@ export class PaymentReviewComponent implements OnInit {
     });
   }
 }
-//-----------------------------------------
 
 @Component({
   // eslint-disable-next-line @angular-eslint/component-selector
@@ -84,7 +79,6 @@ export class NgbdModalContent {
 
   checkValue(): void {
     if (this.startValue === 0 && this.continuePressed === false) {
-      //alert("countdown finished");
       this.modalService.dismissAll();
       this.goToUrl();
     }

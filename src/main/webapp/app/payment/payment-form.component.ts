@@ -25,6 +25,15 @@ export class PaymentFormComponent implements OnInit {
   emailFormControl!: FormControl;
   phoneFormControl!: FormControl;
 
+  constructor(private router: Router, private paymentService: PaymentService) {
+    this.cik = this.paymentService.currentpayment.cik;
+    this.ccc = this.paymentService.currentpayment.ccc;
+    this.paymentAmount = this.paymentService.currentpayment.paymentAmount;
+    this.name = this.paymentService.currentpayment.name;
+    this.email = this.paymentService.currentpayment.email;
+    this.phone = this.paymentService.currentpayment.phoneNumber;
+  }
+
   ngOnInit(): void {
     this.cikFormControl = new FormControl('', [
       Validators.required,
@@ -52,18 +61,6 @@ export class PaymentFormComponent implements OnInit {
     });
   }
 
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  constructor(private router: Router, public paymentService: PaymentService) {
-    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-    if (this.paymentService.currentpayment !== undefined) {
-      this.cik = this.paymentService.currentpayment.cik;
-      this.ccc = this.paymentService.currentpayment.ccc;
-      this.paymentAmount = this.paymentService.currentpayment.paymentAmount;
-      this.name = this.paymentService.currentpayment.name;
-      this.email = this.paymentService.currentpayment.email;
-      this.phone = this.paymentService.currentpayment.phoneNumber;
-    }
-  }
   onNext(): void {
     this.currentPayment = new Payment(this.cik, this.ccc, this.paymentAmount, this.name, this.email, this.phone);
     this.paymentService.currentpayment = this.currentPayment;

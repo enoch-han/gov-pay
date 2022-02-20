@@ -1,14 +1,14 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRoute, ActivatedRouteSnapshot, Resolve } from '@angular/router';
+import { Resolve } from '@angular/router';
+import { Observable } from 'rxjs';
 import { PaymentService } from './payment.service';
+import { Wpayment } from './wpayment.model';
 
 @Injectable()
 export class PaymentResolver implements Resolve<any> {
   constructor(private paymentService: PaymentService) {}
 
-  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-  resolve() {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+  resolve(): Observable<Wpayment> {
     return this.paymentService.getPayment(history.state.data);
   }
 }

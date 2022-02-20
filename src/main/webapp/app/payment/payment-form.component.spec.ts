@@ -1,19 +1,15 @@
-/* eslint-disable object-shorthand */
-/* eslint-disable no-console */
 import { NO_ERRORS_SCHEMA } from '@angular/core';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { Router } from '@angular/router';
-/* eslint-disable @typescript-eslint/no-inferrable-types */
 import { PaymentFormComponent } from './payment-form.component';
 import { Payment } from './payment.model';
 import { PaymentService } from './payment.service';
 
 jest.mock('@angular/router');
-jest.mock('app/payment/payment.service');
 
-function prepareTestPayment(choice: number = 2): Payment {
+function prepareTestPayment(choice = 2): Payment {
   // returns a test payment
   const testPayment = new Payment();
   testPayment.cik = '1234567';
@@ -44,7 +40,6 @@ describe('Payment Form Component', () => {
   let component: PaymentFormComponent;
   let fixture: ComponentFixture<PaymentFormComponent>;
   let mockRouter: Router;
-  let mockPaymentService: PaymentService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -68,7 +63,6 @@ describe('Payment Form Component', () => {
     fixture = TestBed.createComponent(PaymentFormComponent);
     component = fixture.componentInstance;
     mockRouter = TestBed.inject(Router);
-    mockPaymentService = TestBed.inject(PaymentService);
   });
 
   describe('ngOnInit', () => {
@@ -78,7 +72,7 @@ describe('Payment Form Component', () => {
       fixture.detectChanges();
     });
     it('should instantiate the form group', () => {
-      //THEN
+      // THEN
       expect(component.paymentFormGroup).not.toBeNull();
       expect(component.paymentFormGroup).not.toBeUndefined();
     });

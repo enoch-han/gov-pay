@@ -50,30 +50,15 @@ export class PaymentConfirmationComponent implements OnInit {
     });
     this.paymentService.getPayment(history.state.data).subscribe((value: Wpayment) => {
       this.wPayment = value;
-      // eslint-disable-next-line no-console
-      console.log('payment value down');
-      // eslint-disable-next-line no-console
-      console.log(this.wPayment);
+
       const sessionValue = localStorage.getItem('payment');
-      // eslint-disable-next-line no-console
-      console.log('session value down');
-      // eslint-disable-next-line no-console
-      console.log(sessionValue);
+
       if (sessionValue !== null) {
         const copy = JSON.parse(sessionValue) as Payment;
         copy.paymentId = this.wPayment.createdPaymentOutput.payment.id;
         copy.expiryDate = this.wPayment.createdPaymentOutput.payment.paymentOutput.cardPaymentMethodSpecificOutput.card.expiryDate;
         this.paymentService.currentpayment = copy;
-        // eslint-disable-next-line no-console
-        console.log('current payment down');
-        // eslint-disable-next-line no-console
-        console.log(this.paymentService.currentpayment);
-        this.paymentService.savePayment().subscribe((payment: Payment) => {
-          // eslint-disable-next-line no-console
-          console.log('payment created');
-          // eslint-disable-next-line no-console
-          console.log(payment);
-        });
+        this.paymentService.savePayment().subscribe();
       }
     });
   }

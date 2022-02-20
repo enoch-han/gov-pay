@@ -1,13 +1,11 @@
 /* eslint-disable no-console */
 import { WPaymentSuccessResponse } from './wpayment -success-response.model';
 import { BrowserModule, By } from '@angular/platform-browser';
-/* eslint-disable prefer-const */
 import { Mockbin } from './mockbin.model';
 import { NgbModal, NgbActiveModal, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, of } from 'rxjs';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { TestBed, fakeAsync, tick, flushMicrotasks, flush } from '@angular/core/testing';
-/* eslint-disable @typescript-eslint/no-inferrable-types */
+import { TestBed } from '@angular/core/testing';
 import { ComponentFixture } from '@angular/core/testing';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { NgbdModalContent, PaymentReviewComponent } from './payment-review.component';
@@ -18,7 +16,7 @@ import { CommonModule } from '@angular/common';
 jest.mock('@angular/router');
 jest.mock('app/payment/payment.service');
 
-function prepareTestPayment(choice: number = 2): Payment {
+function prepareTestPayment(choice = 2): Payment {
   // returns a test payment
   const testPayment = new Payment();
   testPayment.cik = '1234567';
@@ -55,10 +53,7 @@ describe('Payment Review Component without any query params', () => {
   let reviewComponent: PaymentReviewComponent;
   let reviewFixture: ComponentFixture<PaymentReviewComponent>;
   let mockRouter: Router;
-  let mockPaymentService: PaymentService;
-  let param: Observable<Params> = of({});
-
-  let modalComponent: NgbdModalContent;
+  const param: Observable<Params> = of({});
   let modalFixture: ComponentFixture<NgbdModalContent>;
 
   const mockActivatedRoute = {
@@ -97,7 +92,6 @@ describe('Payment Review Component without any query params', () => {
     reviewFixture = TestBed.createComponent(PaymentReviewComponent);
     modalFixture = TestBed.createComponent(NgbdModalContent);
     reviewComponent = reviewFixture.componentInstance;
-    modalComponent = modalFixture.componentInstance;
     mockRouter = TestBed.inject(Router);
   });
 
@@ -113,12 +107,12 @@ describe('Payment Review Component without any query params', () => {
     });
 
     it('should instantiate the company name to a correct value', () => {
-      //Then
+      // Then
       expect(reviewComponent.currentPayment.companyName).toEqual('ABC company');
     });
 
     it('should instantiate the last payment to a correct value', () => {
-      //Then
+      // Then
       expect(reviewComponent.currentPayment.lastPayment).toEqual(1643743784);
     });
   });
@@ -222,7 +216,7 @@ describe('Payment Review Component without any query params', () => {
       // WHEN
       continueDea.triggerEventHandler('click', null);
 
-      //THEN
+      // THEN
       expect(modalFixture.componentInstance.handleContinue).toHaveBeenCalled();
     });
 
@@ -234,7 +228,7 @@ describe('Payment Review Component without any query params', () => {
       // WHEN
       continueDea.triggerEventHandler('click', null);
 
-      //THEN
+      // THEN
       expect(modalFixture.componentInstance.goToUrl).toHaveBeenCalled();
     });
   });
@@ -243,7 +237,7 @@ describe('Payment Review Component without any query params', () => {
 describe('test payment review with query payam', () => {
   let reviewFixture2: ComponentFixture<PaymentReviewComponent>;
   let mockRouter2: Router;
-  let param2: Observable<Params> = of({ hostedCheckoutId: '1234' });
+  const param2: Observable<Params> = of({ hostedCheckoutId: '1234' });
 
   const mockActivatedRoute = {
     queryParams: param2,
