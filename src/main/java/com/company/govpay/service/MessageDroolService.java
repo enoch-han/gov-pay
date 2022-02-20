@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageDroolService {
 
-    private final String nameCheckURL = "https://mockbin.org/bin/6dfdc74c-749f-4ea0-935e-ed9c9d6650e1";
-    private final String expiryDateCheckURL = "https://mockbin.org/bin/27e9e382-f4ef-4525-a38e-c8e86d2887fc";
-    private final String phoneCheckURL = "https://mockbin.org/bin/861021e7-5859-4f9b-8157-1861e23035c0";
+    private final String nameCheckURL = "https://mockbin.org/bin/ecf51063-ee81-4026-a22f-a5bdf4988c65";
+    private final String expiryDateCheckURL = "https://mockbin.org/bin/65a728a4-0727-4a9b-b482-01a09eaa9b66";
+    private final String phoneCheckURL = "https://mockbin.org/bin/bfcb33f3-4dbf-4306-ad37-af05e92f8c53";
     private final String queueFor25 = "paymentQueue25Done";
     private final String queueFor50 = "paymentQueue50Done";
     private final String queueFor75 = "paymentQueue75Done";

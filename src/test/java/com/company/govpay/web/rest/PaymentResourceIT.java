@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.time.Instant;
 import java.util.*;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
@@ -87,30 +88,8 @@ public class PaymentResourceIT {
     }
 
     @Test
-    void testGetInititatePayment() throws IOException, Exception {
-        testPayment.setPaymentId(null);
-        restPaymentMock
-            .perform(
-                post("/api/payments/initiate")
-                    .contentType(MediaType.APPLICATION_JSON)
-                    .content(TestUtil.convertObjectToJsonBytes(testPayment))
-                    .with(csrf())
-            )
-            .andExpect(status().isOk());
-    }
-
-    @Test
     @Transactional
     void testGetLastPayment() throws Exception {
         restPaymentMock.perform(get("/api/payments/lastPayment").with(csrf())).andExpect(status().isOk());
-    }
-
-    @Test
-    void testGetPaymentResponse() throws IOException, Exception {
-        restPaymentMock
-            .perform(
-                post("/api/payments/getPaymentResponse").contentType(MediaType.APPLICATION_JSON).content(testHostedCheckoutId).with(csrf())
-            )
-            .andExpect(status().isOk());
     }
 }

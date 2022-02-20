@@ -125,6 +125,12 @@ spring:
   output:
     ansi:
       console-available: true
+  activemq:
+    broker-url: tcp://localhost:61616
+    username: admin
+    password: admin
+    packages:
+      trust-all: true
 
 server:
   servlet:

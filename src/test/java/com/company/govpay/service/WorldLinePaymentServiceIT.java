@@ -14,6 +14,7 @@ import com.ingenico.connect.gateway.sdk.java.domain.hostedcheckout.GetHostedChec
 import java.net.URL;
 import java.time.Instant;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -58,12 +59,6 @@ public class WorldLinePaymentServiceIT {
     void testIfInitiatePaymentFailsWithError() {
         //test the response of initiate payment with incorrect payment
         assertThatThrownBy(() -> worldLinePaymentService.initiatePayment(new Payment())).isInstanceOf(ValidationException.class);
-    }
-
-    @Test
-    void testGetPaymentResponseWithValidId() {
-        //test the response get payment response with a valid id
-        assertThat(worldLinePaymentService.getPaymentResponse(testHostedCheckoutValidId)).isInstanceOf(GetHostedCheckoutResponse.class);
     }
 
     @Test

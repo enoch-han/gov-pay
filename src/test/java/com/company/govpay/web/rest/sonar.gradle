@@ -1,0 +1,15 @@
+test {
+    jacoco {
+        excludes += ['build/generated/**']
+    }
+}
+
+jacocoTestReport {
+    afterEvaluate {
+        classDirectories = files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    '**/*_.class'
+            ])
+        })
+    }
+}

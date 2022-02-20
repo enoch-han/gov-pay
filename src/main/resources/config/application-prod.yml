@@ -60,6 +60,12 @@ spring:
     locator:
       discovery:
         enabled: true
+  activemq:
+    broker-url: tcp://localhost:61616
+    username: admin
+    password: admin
+    packages:
+      trust-all: true
 
 # ===================================================================
 # To enable TLS in production, generate a certificate using:
