@@ -8,8 +8,8 @@ import { Payment } from './payment.model';
 
 @Injectable({ providedIn: 'root' })
 export class PaymentService {
-  public currentpayment!: Payment;
-  public hostedCheckoutID!: string;
+  public currentpayment: Payment | undefined;
+  public hostedCheckoutID: string | undefined;
   private resourceUrl = 'api/payments';
 
   constructor(private http: HttpClient) {}

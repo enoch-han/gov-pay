@@ -26,12 +26,14 @@ export class PaymentFormComponent implements OnInit {
   phoneFormControl!: FormControl;
 
   constructor(private router: Router, private paymentService: PaymentService) {
-    this.cik = this.paymentService.currentpayment.cik;
-    this.ccc = this.paymentService.currentpayment.ccc;
-    this.paymentAmount = this.paymentService.currentpayment.paymentAmount;
-    this.name = this.paymentService.currentpayment.name;
-    this.email = this.paymentService.currentpayment.email;
-    this.phone = this.paymentService.currentpayment.phoneNumber;
+    if (paymentService.currentpayment !== undefined) {
+      this.cik = this.paymentService.currentpayment?.cik;
+      this.ccc = this.paymentService.currentpayment?.ccc;
+      this.paymentAmount = this.paymentService.currentpayment?.paymentAmount;
+      this.name = this.paymentService.currentpayment?.name;
+      this.email = this.paymentService.currentpayment?.email;
+      this.phone = this.paymentService.currentpayment?.phoneNumber;
+    }
   }
 
   ngOnInit(): void {

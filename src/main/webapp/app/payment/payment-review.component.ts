@@ -18,7 +18,9 @@ export class PaymentReviewComponent implements OnInit {
   modalRef!: NgbModalRef;
   constructor(public paymentService: PaymentService, public router: Router, public modalService: NgbModal, public route: ActivatedRoute) {}
   ngOnInit(): void {
-    this.currentPayment = this.paymentService.currentpayment;
+    if (this.paymentService.currentpayment !== undefined) {
+      this.currentPayment = this.paymentService.currentpayment;
+    }
     this.paymentService.getCompanyName().subscribe((value: Mockbin) => {
       this.currentPayment.companyName = value.text;
     });
