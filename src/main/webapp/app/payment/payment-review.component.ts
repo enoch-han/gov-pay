@@ -20,13 +20,14 @@ export class PaymentReviewComponent implements OnInit {
   ngOnInit(): void {
     if (this.paymentService.currentpayment !== undefined) {
       this.currentPayment = this.paymentService.currentpayment;
+
+      this.paymentService.getCompanyName().subscribe((value: Mockbin) => {
+        this.currentPayment.companyName = value.text;
+      });
+      this.paymentService.getLastPayment().subscribe((value: Mockbin) => {
+        this.currentPayment.lastPayment = +value.text;
+      });
     }
-    this.paymentService.getCompanyName().subscribe((value: Mockbin) => {
-      this.currentPayment.companyName = value.text;
-    });
-    this.paymentService.getLastPayment().subscribe((value: Mockbin) => {
-      this.currentPayment.lastPayment = +value.text;
-    });
 
     this.route.queryParams.subscribe(params => {
       if (params.hostedCheckoutId) {
