@@ -14,7 +14,6 @@ import com.ingenico.connect.gateway.sdk.java.domain.payment.definitions.Customer
 import com.ingenico.connect.gateway.sdk.java.domain.payment.definitions.Order;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.util.UUID;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,18 +26,12 @@ public class WorldLinePaymentService {
     URL propertiesUrl = getClass().getResource("/WorldLinePayment.properties");
     String merchantId = "1070";
     String merchantName = "Merchant 1070";
-
-    public String checkoutId;
-    public String mac;
-    public String merchantReference;
-    public String partialUrl;
+    private String returnURL = "http://localhost:9000/payment-review";
 
     private Client client;
 
     private Client getClient() throws URISyntaxException {
-        System.out.println("creating new client");
         CommunicatorConfiguration configuration = Factory.createConfiguration(this.propertiesUrl.toURI(), apiKeyId, secretApiKey);
-        System.out.println("after creating new client");
         return Factory.createClient(configuration);
     }
 
@@ -49,7 +42,7 @@ public class WorldLinePaymentService {
             HostedCheckoutSpecificInput hostedCheckoutSpecificInput = new HostedCheckoutSpecificInput();
             hostedCheckoutSpecificInput.setLocale("en_GB");
             hostedCheckoutSpecificInput.setVariant("100");
-            hostedCheckoutSpecificInput.setReturnUrl("http://localhost:9000/payment-review");
+            hostedCheckoutSpecificInput.setReturnUrl(returnURL);
 
             AmountOfMoney amountOfMoney = new AmountOfMoney();
             amountOfMoney.setAmount(value.getPaymentAmount());
@@ -57,8 +50,6 @@ public class WorldLinePaymentService {
 
             Address billingAddress = new Address();
             billingAddress.setCountryCode("US");
-
-            String uuid = UUID.randomUUID().toString();
 
             Customer customer = new Customer();
             customer.setBillingAddress(billingAddress);
@@ -71,12 +62,10 @@ public class WorldLinePaymentService {
             body.setHostedCheckoutSpecificInput(hostedCheckoutSpecificInput);
             body.setOrder(order);
         } catch (URISyntaxException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
-        CreateHostedCheckoutResponse response = client.merchant(merchantId).hostedcheckouts().create(body);
-        return response;
+        return client.merchant(merchantId).hostedcheckouts().create(body);
     }
 
     public GetHostedCheckoutResponse getPaymentResponse(String hostedCheckoutId) {

@@ -47,6 +47,8 @@ public class AccountResource {
 
     private final PersistentTokenRepository persistentTokenRepository;
 
+    private final String userNotFoundSnippet = "User could not be found";
+
     public AccountResource(
         UserRepository userRepository,
         UserService userService,
@@ -114,7 +116,7 @@ public class AccountResource {
         return userService
             .getUserWithAuthorities()
             .map(AdminUserDTO::new)
-            .orElseThrow(() -> new AccountResourceException("User could not be found"));
+            .orElseThrow(() -> new AccountResourceException(userNotFoundSnippet));
     }
 
     /**
@@ -135,7 +137,7 @@ public class AccountResource {
         }
         Optional<User> user = userRepository.findOneByLogin(userLogin);
         if (!user.isPresent()) {
-            throw new AccountResourceException("User could not be found");
+            throw new AccountResourceException(userNotFoundSnippet);
         }
         userService.updateUser(
             userDTO.getFirstName(),
@@ -173,7 +175,7 @@ public class AccountResource {
                 .findOneByLogin(
                     SecurityUtils.getCurrentUserLogin().orElseThrow(() -> new AccountResourceException("Current user login not found"))
                 )
-                .orElseThrow(() -> new AccountResourceException("User could not be found"))
+                .orElseThrow(() -> new AccountResourceException(userNotFoundSnippet))
         );
     }
 

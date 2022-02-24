@@ -32,24 +32,14 @@ public class PaymentResource {
 
     private static final String ENTITY_NAME = "payment";
 
-    private final PaymentService paymentService;
-
     private final MessagePublisher messagePublisher;
-
-    // private final UserService userService;
 
     private final WorldLinePaymentService worldLinePaymentService;
 
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    public PaymentResource(
-        PaymentService paymentService,
-        WorldLinePaymentService worldLinePaymentService,
-        MessagePublisher messagePublisher
-    ) {
-        this.paymentService = paymentService;
-        // this.userService = userService;
+    public PaymentResource(WorldLinePaymentService worldLinePaymentService, MessagePublisher messagePublisher) {
         this.worldLinePaymentService = worldLinePaymentService;
         this.messagePublisher = messagePublisher;
     }
@@ -66,7 +56,6 @@ public class PaymentResource {
         message.setMessage("payment needs to validated");
         message.setPayload(payment);
         if (messagePublisher.publishMessage("paymentQueue", message)) {
-            System.out.println("after payment validation started");
             return ResponseEntity
                 .created(new URI("/api/payments/" + payment.getPhoneNumber()))
                 .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, payment.getPhoneNumber().toString()))
@@ -97,10 +86,6 @@ public class PaymentResource {
         log.debug("REST request to initiate WorldLine payment : {}", payment);
 
         CreateHostedCheckoutResponse response = worldLinePaymentService.initiatePayment(payment);
-        worldLinePaymentService.checkoutId = response.getHostedCheckoutId();
-        worldLinePaymentService.mac = response.getRETURNMAC();
-        worldLinePaymentService.merchantReference = response.getMerchantReference();
-        worldLinePaymentService.partialUrl = response.getPartialRedirectUrl();
         log.debug(" world line initiation response : {}", response);
 
         return response;

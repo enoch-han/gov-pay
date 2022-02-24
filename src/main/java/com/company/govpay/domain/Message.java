@@ -7,7 +7,7 @@ public class Message implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private String source;
-    private String message;
+    private String customMessage;
     private Payment payload;
     private CheckType check = CheckType.NONE;
     private String checkURL;
@@ -23,11 +23,11 @@ public class Message implements Serializable {
     }
 
     public String getMessage() {
-        return message;
+        return customMessage;
     }
 
     public void setMessage(String message) {
-        this.message = message;
+        this.customMessage = message;
     }
 
     public Payment getPayload() {
@@ -78,7 +78,7 @@ public class Message implements Serializable {
     public String toString() {
         return (
             "Message [message=" +
-            message +
+            customMessage +
             ", payload=" +
             payload +
             ", source=" +
