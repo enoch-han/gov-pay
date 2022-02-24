@@ -1,8 +1,8 @@
 package com.company.govpay.config;
 
+import java.util.Arrays;
 import javax.jms.ConnectionFactory;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.annotation.EnableJms;
@@ -19,7 +19,7 @@ public class ActiveMQConfiguration {
     public ConnectionFactory connectionFactory() {
         ActiveMQConnectionFactory activeMQConnectionFactory = new ActiveMQConnectionFactory();
         activeMQConnectionFactory.setBrokerURL(brokerUrl);
-        activeMQConnectionFactory.setTrustAllPackages(true);
+        activeMQConnectionFactory.setTrustedPackages(Arrays.asList("com.company.govpay.domain"));
         return activeMQConnectionFactory;
     }
 

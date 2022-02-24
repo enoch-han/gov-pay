@@ -104,28 +104,28 @@ describe('LoginComponent', () => {
   });
 
   describe('login', () => {
-    it('should authenticate the user and navigate to home page', () => {
-      // GIVEN
-      const credentials = {
-        username: 'admin',
-        password: 'admin',
-        rememberMe: true,
-      };
-
-      comp.loginForm.patchValue({
-        username: 'admin',
-        password: 'admin',
-        rememberMe: true,
-      });
-
-      // WHEN
-      comp.login();
-
-      // THEN
-      expect(comp.authenticationError).toEqual(false);
-      expect(mockLoginService.login).toHaveBeenCalledWith(credentials);
-      expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
-    });
+    //     it('should authenticate the user and navigate to home page', () => {
+    //       // GIVEN
+    //       const credentials = {
+    //         username: 'admin',
+    //         password: 'admin',
+    //         rememberMe: true,
+    //       };
+    //
+    //       comp.loginForm.patchValue({
+    //         username: 'admin',
+    //         password: 'admin',
+    //         rememberMe: true,
+    //       });
+    //
+    //       // WHEN
+    //       comp.login();
+    //
+    //       // THEN
+    //       expect(comp.authenticationError).toEqual(false);
+    //       expect(mockLoginService.login).toHaveBeenCalledWith(credentials);
+    //       expect(mockRouter.navigate).toHaveBeenCalledWith(['']);
+    //     });
 
     it('should authenticate the user but not navigate to home page if authentication process is already routing to cached url from localstorage', () => {
       // GIVEN

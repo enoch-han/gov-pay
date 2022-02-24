@@ -27,7 +27,7 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
     @SequenceGenerator(name = "sequenceGenerator")
-    private Long id;
+    Long id;
 
     @NotNull
     @Pattern(regexp = Constants.LOGIN_REGEX)

@@ -1,10 +1,7 @@
 package com.company.govpay.service.queue;
 
-import com.company.govpay.domain.CheckType;
 import com.company.govpay.domain.Message;
 import com.company.govpay.domain.Mock;
-import com.company.govpay.domain.Payment;
-import com.company.govpay.service.MailService;
 import com.company.govpay.service.MessageDroolService;
 import com.company.govpay.service.PaymentService;
 import org.slf4j.Logger;
@@ -51,7 +48,6 @@ public class MessageConsumer {
         // listens for 25 percent completed queue
 
         LOGGER.info("Message recieved in messageConsumer25Done: {}", message);
-        LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
         message.setSource("payment queue 25 percent completed");
         message.setMessage(" needs to check expiry date");
 
@@ -59,7 +55,6 @@ public class MessageConsumer {
             // if it has valid name it add the percentage and pass it to the next stage
             droolService.insertOrUpdate(message);
             message.completeOneQueueCycle();
-            LOGGER.info(" Completion percentage aftere proccessed in the consumer: {}", message.getCompletionPercentage());
             messagePublisher.publishMessage(message.getNextQueue(), message);
             valueRecieved = false;
         } else {
@@ -77,7 +72,6 @@ public class MessageConsumer {
         // listens for 50 percent completed message
 
         LOGGER.info("Message recieved in messageConsumer50Done: {}", message);
-        LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
         message.setSource("payment queue 50 percent completed");
         message.setMessage(" needs to check phone number");
 
@@ -86,7 +80,6 @@ public class MessageConsumer {
 
             droolService.insertOrUpdate(message);
             message.completeOneQueueCycle();
-            LOGGER.info(" Completion percentage after proccessed in the consumer: {}", message.getCompletionPercentage());
             messagePublisher.publishMessage(message.getNextQueue(), message);
             valueRecieved = false;
         } else {
@@ -102,7 +95,6 @@ public class MessageConsumer {
     @JmsListener(destination = "paymentQueue75Done")
     public void message75PercentListener(Message message) {
         LOGGER.info("Message recieved in messageConsumer75Done: {}", message);
-        LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
         message.setSource("payment queue 75 percent completed");
 
         if (validate(message) && valueRecieved) {
@@ -110,7 +102,6 @@ public class MessageConsumer {
 
             droolService.insertOrUpdate(message);
             message.completeOneQueueCycle();
-            LOGGER.info(" Completion percentage after proccessed in the consumer: {}", message.getCompletionPercentage());
             messagePublisher.publishMessage(message.getNextQueue(), message);
             valueRecieved = false;
         } else {
@@ -126,7 +117,6 @@ public class MessageConsumer {
     @JmsListener(destination = "paymentQueue100Done")
     public void message100PercentListener(Message message) {
         LOGGER.info("Message recieved in messageConsumer100Done: {}", message);
-        LOGGER.info(" Completion percentage when entered: {}", message.getCompletionPercentage());
         message.setSource("payment queue 100 percent completed");
         message.setMessage("payment completed");
         droolService.insertOrUpdate(message);
@@ -150,11 +140,10 @@ public class MessageConsumer {
                 try {
                     data = requestValidationInput(message.getCheckURL());
                     valueRecieved = true;
-                    if (message.getPayload().getName().equalsIgnoreCase(data.getText())) {
-                        return false;
-                    } else {
-                        return true;
+                    if (data != null && !data.getText().isEmpty()) {
+                        return !message.getPayload().getName().equalsIgnoreCase(data.getText());
                     }
+                    return false;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;
@@ -163,11 +152,10 @@ public class MessageConsumer {
                 try {
                     data = requestValidationInput(message.getCheckURL());
                     valueRecieved = true;
-                    if (message.getPayload().getExpiryDate().equalsIgnoreCase(data.getText())) {
-                        return false;
-                    } else {
-                        return true;
+                    if (data != null && !data.getText().isEmpty()) {
+                        return !message.getPayload().getExpiryDate().equalsIgnoreCase(data.getText());
                     }
+                    return false;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;
@@ -176,11 +164,10 @@ public class MessageConsumer {
                 try {
                     data = requestValidationInput(message.getCheckURL());
                     valueRecieved = true;
-                    if (message.getPayload().getPhoneNumber().equalsIgnoreCase(data.getText())) {
-                        return false;
-                    } else {
-                        return true;
+                    if (data != null && !data.getText().isEmpty()) {
+                        return !message.getPayload().getPhoneNumber().equalsIgnoreCase(data.getText());
                     }
+                    return false;
                 } catch (Exception e) {
                     e.printStackTrace();
                     return false;
@@ -189,6 +176,7 @@ public class MessageConsumer {
                 return false;
             case COMPLETED:
                 message.setPayload(paymentService.save(message.getPayload()));
+                return true;
             default:
                 return false;
         }

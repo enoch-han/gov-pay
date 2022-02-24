@@ -10,7 +10,7 @@
   <div class="middle">
     <div class="info">
       <h2>
-        <b style="color: #00134d"> Submit payment </b>
+        <strong style="color: #00134d"> Submit payment </strong>
       </h2>
       <p>
         To submit an SEC filling fee payment using ACH, credit or debit card, enter the below information and click next you will then
@@ -25,7 +25,7 @@
       <div class="title">
         <h3>
           <p>
-            <b> Confrim information </b>
+            <strong> Confrim information </strong>
           </p>
         </h3>
       </div>
@@ -34,35 +34,35 @@
       </div>
       <div style="padding: 20px">
         <h4>
-          <b>Your credential and payment amount</b>
+          <strong>Your credential and payment amount</strong>
         </h4>
 
-        <p style="font-weight: bold"><b>CIK</b></p>
+        <p style="font-weight: bold"><strong>CIK</strong></p>
         <p>{{ currentPayment.cik }}</p>
 
-        <p style="font-weight: bold"><b>CCC</b></p>
+        <p style="font-weight: bold"><strong>CCC</strong></p>
         <p>{{ currentPayment.ccc }}</p>
 
-        <p style="font-weight: bold"><b>Company Name</b></p>
+        <p style="font-weight: bold"><strong>Company Name</strong></p>
         <p>{{ currentPayment.companyName }}</p>
 
-        <p style="font-weight: bold"><b>Date of last payment</b></p>
+        <p style="font-weight: bold"><strong>Date of last payment</strong></p>
         <p>{{ currentPayment.lastPayment | date: 'short' }}</p>
 
-        <p style="font-weight: bold"><b>Payment Amount</b></p>
+        <p style="font-weight: bold"><strong>Payment Amount</strong></p>
         <p>{{ currentPayment.paymentAmount }}</p>
 
         <h4>
-          <b>Your contact information</b>
+          <strong>Your contact information</strong>
         </h4>
 
-        <p style="font-weight: bold"><b>Name</b></p>
+        <p style="font-weight: bold"><strong>Name</strong></p>
         <p>{{ currentPayment.name }}</p>
 
-        <p style="font-weight: bold"><b>Email</b></p>
+        <p style="font-weight: bold"><strong>Email</strong></p>
         <p>{{ currentPayment.email }}</p>
 
-        <p style="font-weight: bold"><b>Phone</b></p>
+        <p style="font-weight: bold"><strong>Phone</strong></p>
         <p>{{ currentPayment.phoneNumber }}</p>
 
         <button
@@ -72,7 +72,7 @@
           (click)="handleBack()"
           style="background-color: aqua; color: #003366; margin: 10px; margin-right: 40px"
         >
-          <span class="fa fa-ban"></span>&nbsp;<span><b>Back</b></span>
+          <span class="fa fa-ban"></span>&nbsp;<span><strong>Back</strong></span>
         </button>
         <button
           id="proceed_button"
@@ -81,7 +81,7 @@
           (click)="handleProceed()"
           style="background-color: aqua; color: #003366; margin: 10px"
         >
-          <span class="fa fa-ban"></span>&nbsp;<span><b>Proceed to Payment</b></span>
+          <span class="fa fa-ban"></span>&nbsp;<span><strong>Proceed to Payment</strong></span>
         </button>
       </div>
     </div>
