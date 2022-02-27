@@ -29,7 +29,7 @@
     "buildTool": "gradle",
     "serverSideOptions": [],
     "websocket": false,
-    "searchEngine": false,
+    "searchEngine": "elasticsearch",
     "messageBroker": false,
     "enableSwaggerCodegen": false,
     "clientFramework": "angularX",

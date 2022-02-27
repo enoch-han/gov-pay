@@ -10,6 +10,7 @@ services:
       - SPRING_DATASOURCE_URL=jdbc:postgresql://govpay-postgresql:5432/govpay
       - SPRING_LIQUIBASE_URL=jdbc:postgresql://govpay-postgresql:5432/govpay
       - JHIPSTER_SLEEP=30 # gives time for other services to boot before the application
+      - SPRING_DATA_ELASTICSEARCH_REST_URIS=govpay-elasticsearch:9200
     # If you want to expose these ports outside your dev PC,
     # remove the "127.0.0.1:" prefix
     ports:
@@ -26,3 +27,15 @@ services:
     # remove the "127.0.0.1:" prefix
     ports:
       - 127.0.0.1:5432:5432
+  govpay-elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.13.3
+    # volumes:
+    #   - ~/volumes/jhipster/govpay/elasticsearch/:/usr/share/elasticsearch/data/
+    # If you want to expose these ports outside your dev PC,
+    # remove the "127.0.0.1:" prefix
+    ports:
+      - 127.0.0.1:9200:9200
+      - 127.0.0.1:9300:9300
+    environment:
+      - 'ES_JAVA_OPTS=-Xms1024m -Xmx1024m'
+      - 'discovery.type=single-node'

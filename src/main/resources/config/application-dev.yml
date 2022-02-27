@@ -20,6 +20,11 @@ logging:
     org.hibernate.SQL: DEBUG
     com.company.govpay: DEBUG
 
+management:
+  health:
+    elasticsearch:
+      enabled: false
+
 spring:
   devtools:
     restart:
@@ -44,6 +49,9 @@ spring:
       enabled: false
   jpa:
     database-platform: tech.jhipster.domain.util.FixedH2Dialect
+  elasticsearch:
+    rest:
+      uris: http://localhost:9200
   liquibase:
     # Remove 'faker' if you do not want the sample data to be loaded automatically
     contexts: dev, faker
